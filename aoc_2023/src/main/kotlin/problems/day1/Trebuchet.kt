@@ -2,7 +2,7 @@ package problems.day1
 
 import problems.utils.readInput
 
-open class Trabuchet(input: String) {
+open class Trebuchet(input: String) {
 
     var inputLines: List<String>
 

@@ -1,6 +1,6 @@
 package problems.day1
 
-class TextTrabuchet(input: String) : Trabuchet(input) {
+class TextTrebuchet(input: String) : Trebuchet(input) {
 
 
     private val extraOptionsMapper = mapOf(

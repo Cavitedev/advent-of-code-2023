@@ -8,33 +8,33 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 
-class TrabuchetTest {
+class TrebuchetTest {
 
     @Nested
     @DisplayName("Part 1")
-    inner class Part1TrabuchetTest {
+    inner class Part1TrebuchetTest {
 
-        lateinit var trabuchet: Trabuchet
+        lateinit var trebuchet: Trebuchet
 
         @BeforeEach
         fun initTrabucher() {
-            trabuchet = Trabuchet("test/resources/problems/day1/input_test")
+            trebuchet = Trebuchet("test/resources/problems/day1/input_test")
         }
 
         @Test
         fun getInputLines() {
-            assertEquals(4, trabuchet.inputLines.count())
+            assertEquals(4, trebuchet.inputLines.count())
 
         }
 
         @Test
         fun getEdgeDigits() {
-            assertEquals(4, trabuchet.getEdgeDigits().count())
+            assertEquals(4, trebuchet.getEdgeDigits().count())
         }
 
         @Test
         fun sumEdgeDigits() {
-            assertEquals(142, trabuchet.sumEdgeDigits())
+            assertEquals(142, trebuchet.sumEdgeDigits())
         }
     }
 }

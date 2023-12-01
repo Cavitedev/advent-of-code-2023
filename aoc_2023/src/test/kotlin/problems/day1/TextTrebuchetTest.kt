@@ -4,23 +4,23 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class TextTrabuchetTest {
+class TextTrebuchetTest {
 
-    lateinit var trabuchet: Trabuchet
+    lateinit var trebuchet: Trebuchet
 
     @BeforeEach
     fun initTrabucher() {
-        trabuchet = TextTrabuchet("test/resources/problems/day1/input_test2")
+        trebuchet = TextTrebuchet("test/resources/problems/day1/input_test2")
     }
 
     @Test
     fun getInputLines() {
-        assertEquals(7, trabuchet.inputLines.count())
+        assertEquals(7, trebuchet.inputLines.count())
     }
 
     @Test
     fun getEdgeDigits() {
-        val listNumbers = trabuchet.getEdgeDigits()
+        val listNumbers = trebuchet.getEdgeDigits()
         assertEquals(7, listNumbers.count())
         assertEquals(listOf(2, 9), listNumbers.first())
         assertEquals(listOf(8, 3), listNumbers.get(1))
@@ -30,6 +30,6 @@ class TextTrabuchetTest {
 
     @Test
     fun sumEdgeDigits() {
-        assertEquals(281, trabuchet.sumEdgeDigits())
+        assertEquals(281, trebuchet.sumEdgeDigits())
     }
 }

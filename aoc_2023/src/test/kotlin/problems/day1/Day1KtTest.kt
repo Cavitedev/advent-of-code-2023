@@ -8,13 +8,13 @@ class Day1KtTest {
 
     @Test
     fun part1() {
-        val trabuchet = Trabuchet("test/resources/problems/day1/input")
-        assertEquals(55621, trabuchet.sumEdgeDigits())
+        val trebuchet = Trebuchet("test/resources/problems/day1/input")
+        assertEquals(55621, trebuchet.sumEdgeDigits())
     }
 
     @Test
     fun part2() {
-        val trabuchet = TextTrabuchet("test/resources/problems/day1/input")
+        val trabuchet = TextTrebuchet("test/resources/problems/day1/input")
         assertEquals(53592, trabuchet.sumEdgeDigits())
     }
 
