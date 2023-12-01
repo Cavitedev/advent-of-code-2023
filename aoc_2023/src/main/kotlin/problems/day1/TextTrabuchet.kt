@@ -3,7 +3,7 @@ package problems.day1
 class TextTrabuchet(input: String) : Trabuchet(input) {
 
 
-    val extraOptionsMapper = mapOf(
+    private val extraOptionsMapper = mapOf(
         "one" to 1,
         "two" to 2,
         "three" to 3,
