@@ -14,8 +14,8 @@ class Day1KtTest {
 
     @Test
     fun part2() {
-        val trabuchet = Trabuchet("test/resources/problems/day1/input")
-        assertEquals(53592, trabuchet.sumEdgeDigits(true))
+        val trabuchet = TextTrabuchet("test/resources/problems/day1/input")
+        assertEquals(53592, trabuchet.sumEdgeDigits())
     }
 
 
