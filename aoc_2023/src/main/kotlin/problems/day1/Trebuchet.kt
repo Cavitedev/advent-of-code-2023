@@ -26,20 +26,20 @@ open class Trebuchet(input: String) {
         return optionsMapper
     }
 
-    open fun getEdgeDigits(): List<List<Int>> {
+    open fun getEdgeDigits(): List<Pair<Int, Int>> {
         val optsMap = getOptionsMapper()
         val options = optsMap.keys
         return inputLines.map {
             val firstNumber = optsMap[it.findAnyOf(options)!!.second]!!
             val lastNumber = optsMap[it.findLastAnyOf(options)!!.second]!!
-            listOf(firstNumber, lastNumber)
+            Pair(firstNumber, lastNumber)
         }
     }
 
     fun sumEdgeDigits(): Int {
 
         val sum = getEdgeDigits().fold(0) { sum, line ->
-            sum + line.first() * 10 + line.last()
+            sum + line.first * 10 + line.second
         }
         return sum
     }
