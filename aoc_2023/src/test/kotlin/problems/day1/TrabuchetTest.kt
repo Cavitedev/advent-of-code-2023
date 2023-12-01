@@ -28,8 +28,8 @@ class TrabuchetTest {
         }
 
         @Test
-        fun getNumberLines() {
-            assertEquals(4, trabuchet.getNumberLines().count())
+        fun getEdgeDigits() {
+            assertEquals(4, trabuchet.getEdgeDigits().count())
         }
 
         @Test

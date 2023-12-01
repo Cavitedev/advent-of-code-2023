@@ -10,22 +10,35 @@ open class Trabuchet(input: String) {
         inputLines = readInput(input)
     }
 
+    private val optionsMapper = mapOf(
+        "1" to 1,
+        "2" to 2,
+        "3" to 3,
+        "4" to 4,
+        "5" to 5,
+        "6" to 6,
+        "7" to 7,
+        "8" to 8,
+        "9" to 9
+    )
 
-    fun getNumberLines(): List<List<Int>> {
-        val numberLines = mutableListOf<List<Int>>()
+    open fun getOptionsMapper(): Map<String, Int> {
+        return optionsMapper
+    }
 
-        for (line in inputLines) {
-            val charArray = line.toCharArray()
-
-            val numbersList: List<Int> = charArray.filter { it.isDigit() }.map { it.digitToInt() }
-            numberLines.add(numbersList)
+    open fun getEdgeDigits(): List<List<Int>> {
+        val optsMap = getOptionsMapper()
+        val options = optsMap.keys
+        return inputLines.map {
+            val firstNumber = optsMap[it.findAnyOf(options)!!.second]!!
+            val lastNumber = optsMap[it.findLastAnyOf(options)!!.second]!!
+            listOf(firstNumber, lastNumber)
         }
-        return numberLines
     }
 
     fun sumEdgeDigits(): Int {
 
-        val sum = getNumberLines().fold(0) { sum, line ->
+        val sum = getEdgeDigits().fold(0) { sum, line ->
             sum + line.first() * 10 + line.last()
         }
         return sum
