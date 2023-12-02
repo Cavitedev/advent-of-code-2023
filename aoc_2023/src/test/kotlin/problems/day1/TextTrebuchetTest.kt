@@ -10,7 +10,7 @@ class TextTrebuchetTest {
 
     @BeforeEach
     fun initTrabucher() {
-        trebuchet = TextTrebuchet("test/resources/problems/day1/input_test2")
+        trebuchet = TextTrebuchet("day1/input_test2")
     }
 
     @Test
@@ -22,10 +22,10 @@ class TextTrebuchetTest {
     fun getEdgeDigits() {
         val listNumbers = trebuchet.getEdgeDigits()
         assertEquals(7, listNumbers.count())
-        assertEquals(listOf(2, 9), listNumbers.first())
-        assertEquals(listOf(8, 3), listNumbers.get(1))
-        assertEquals(listOf(1, 4), listNumbers.get(5))
-        assertEquals(listOf(7, 6), listNumbers.last())
+        assertEquals(Pair(2, 9), listNumbers.first())
+        assertEquals(Pair(8, 3), listNumbers.get(1))
+        assertEquals(Pair(1, 4), listNumbers.get(5))
+        assertEquals(Pair(7, 6), listNumbers.last())
     }
 
     @Test

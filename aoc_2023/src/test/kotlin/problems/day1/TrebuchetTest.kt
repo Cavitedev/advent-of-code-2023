@@ -18,7 +18,7 @@ class TrebuchetTest {
 
         @BeforeEach
         fun initTrabucher() {
-            trebuchet = Trebuchet("test/resources/problems/day1/input_test")
+            trebuchet = Trebuchet("day1/input_test")
         }
 
         @Test
