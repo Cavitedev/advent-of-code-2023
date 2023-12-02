@@ -1,8 +1,7 @@
 package problems.day2
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 class CubeGameTest {
 
@@ -23,5 +22,16 @@ class CubeGameTest {
         val game = CubeGame(1, listOf(round1, round2, round3))
         val possibleGame = game.isPossibleGame(CubeRound(12, 13, 14))
         assertEquals(false, possibleGame)
+    }
+
+    @Test
+    fun minimumSet() {
+        val round1 = CubeRound(1, 2, 3)
+        val round2 = CubeRound(2, 4, 2)
+        val round3 = CubeRound(3, 0, 0)
+        val game = CubeGame(1, listOf(round1, round2, round3))
+        val minSet = game.minimumSet()
+        val expectedSet = CubeRound(3, 4, 3)
+        assertEquals(expectedSet, minSet)
     }
 }

@@ -12,4 +12,10 @@ class Day2Test {
         Assertions.assertEquals(2239, conundrum.sumIdPossibleGames(CubeRound(12, 13, 14)))
     }
 
+    @Test
+    fun part2() {
+        val conundrum = CubeConundrum.fromLines(readInput("day2/input"))
+        Assertions.assertEquals(83435, conundrum.sumPowersMinimumSets())
+    }
+
 }

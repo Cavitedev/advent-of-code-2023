@@ -1,9 +1,8 @@
 package problems.day2
 
-import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import problems.utils.readInput
 
 class CubeConundrumTest {
@@ -24,5 +23,10 @@ class CubeConundrumTest {
     @Test
     fun sumIdPossibleGames() {
         assertEquals(8, cubeConundrum.sumIdPossibleGames(CubeRound(12, 13, 14)))
+    }
+
+    @Test
+    fun sumPowersMinimumSets() {
+        assertEquals(2286, cubeConundrum.sumPowersMinimumSets())
     }
 }

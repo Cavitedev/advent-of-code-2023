@@ -46,4 +46,10 @@ class CubeConundrum(val games: List<CubeGame>) {
         }
     }
 
+    fun sumPowersMinimumSets(): Int {
+        return this.games.fold(0) { acc, it ->
+            acc + it.minimumSet().powerSet()
+        }
+    }
+
 }

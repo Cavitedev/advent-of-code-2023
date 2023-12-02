@@ -16,4 +16,10 @@ class CubeGame(id: Int, rounds: List<CubeRound>) {
         }
     }
 
+    fun minimumSet(): CubeRound {
+        return this.rounds.reduce { val1, val2 ->
+            val1.combineMinimumSet(val2)
+        }
+    }
+
 }
