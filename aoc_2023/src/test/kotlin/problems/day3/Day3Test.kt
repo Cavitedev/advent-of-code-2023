@@ -10,4 +10,10 @@ class Day3Test {
         val gondola = Gondola.fromLines(readInput("day3/input"))
         Assertions.assertEquals(532445, gondola.sumValues())
     }
+
+    @Test
+    fun part2() {
+        val gondola = Gondola.fromLines(readInput("day3/input"))
+        Assertions.assertEquals(79842967, gondola.gearRatio())
+    }
 }

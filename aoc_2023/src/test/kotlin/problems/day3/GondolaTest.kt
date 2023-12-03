@@ -32,4 +32,9 @@ class GondolaTest {
         assertEquals(4361, gondola.sumValues())
     }
 
+    @Test
+    fun gearRatio() {
+        assertEquals(467835, gondola.gearRatio())
+    }
+
 }

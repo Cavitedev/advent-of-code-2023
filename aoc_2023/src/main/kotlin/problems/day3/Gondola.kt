@@ -71,4 +71,12 @@ class Gondola(val symbolNumbers: List<SymbolNumbers>) {
             acc + symbolNumbers.numbers.sum()
         }
     }
+
+    fun gearRatio(): Int {
+        return this.symbolNumbers.filter {
+            it.symbol == '*' && it.numbers.count() == 2
+        }.fold(0) { acc, symbolNumbers ->
+            acc + symbolNumbers.numbers.reduce { acc2, value -> acc2 * value }
+        }
+    }
 }
