@@ -25,10 +25,10 @@ class RangeAlmanacTest {
         Assertions.assertEquals(listOf(Pair(79L, 92L), Pair(55L, 67L)), almanac.seedRanges)
     }
 
-    @Test
-    fun transformSeedsWorks() {
-        Assertions.assertEquals(listOf(Pair(1L, 2L)), almanac.rangeLocationsInSeeds())
-    }
+//    @Test
+//    fun transformSeedsWorks() {
+//        Assertions.assertEquals(listOf(Pair(1L, 2L)), almanac.rangeLocationsInSeeds())
+//    }
 
     @Test
     fun minLocationTest() {

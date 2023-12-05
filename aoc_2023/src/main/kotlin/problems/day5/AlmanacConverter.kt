@@ -7,8 +7,18 @@ data class AlmanacConverter(val ranges: List<ConvertRange>) {
     }
 
     fun transform(input: List<Pair<Long, Long>>): List<Pair<Long, Long>> {
-        return ranges.fold(input) { acc, range ->
-            range.convert(acc)
+        val convertedValues: MutableList<Pair<Long, Long>> = mutableListOf()
+
+        val returnedValues = ranges.fold(input) { acc, range ->
+            val converted = range.convert(acc)
+            if (converted.isNotEmpty()) {
+                convertedValues.addAll(converted[0])
+            }
+            converted[1]
+
         }
+        convertedValues.addAll(returnedValues)
+
+        return convertedValues
     }
 }

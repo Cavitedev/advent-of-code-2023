@@ -12,10 +12,10 @@ class Day5Test {
         Assertions.assertEquals(1181555926, almanac.minLocation())
     }
 
-//    @Test
-//    fun part2() {
-//        val scratchcards = Scratchcards.fromLines(readInput("day4/input"))
-//        Assertions.assertEquals(11024379, scratchcards.sumNumberOfCopies())
-//    }
+    @Test
+    fun part2() {
+        val almanac = RangeAlmanac.fromLines(readInput("day5/input"))
+        Assertions.assertEquals(37806486, almanac.minLocation())
+    }
 
 }
