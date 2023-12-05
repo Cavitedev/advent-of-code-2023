@@ -1,6 +1,6 @@
 package problems.day5
 
-class Almanac(val seeds: List<Long>, val converters: List<AlmanacConverter>) {
+open class Almanac(val seeds: List<Long>, val converters: List<AlmanacConverter>) {
 
     companion object {
 
@@ -40,10 +40,9 @@ class Almanac(val seeds: List<Long>, val converters: List<AlmanacConverter>) {
                 converter.transform(acc)
             }
         }
-
     }
 
-    fun minLocation(): Long {
+    open fun minLocation(): Long {
         return this.locationsInSeeds().min()
     }
 
