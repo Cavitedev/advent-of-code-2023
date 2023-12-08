@@ -15,7 +15,7 @@ class Day8Test {
     @Test
     fun part2() {
         val desertMap = DesertMap(readInput("day8/input"))
-        Assertions.assertEquals(19783, desertMap.ghostStepsSolution())
+        Assertions.assertEquals(9177460370549L, desertMap.ghostStepsSolution())
     }
 
 }

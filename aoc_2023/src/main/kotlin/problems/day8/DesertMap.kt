@@ -1,5 +1,7 @@
 package problems.day8
 
+import Utils
+
 class DesertMap(val directions: List<Int>, val connections: Map<String, Pair<String, String>>) {
 
 
@@ -50,7 +52,7 @@ class DesertMap(val directions: List<Int>, val connections: Map<String, Pair<Str
                 solutions.add(sol)
                 initialState = currentState
                 initialStep = steps
-                if (solutions.any { it.startSite == currentState }) break
+                if (solutions.any { it.startSite == currentState && it.startIndex % this.directions.count() == steps % this.directions.count() }) break
             }
         }
 
@@ -58,18 +60,17 @@ class DesertMap(val directions: List<Int>, val connections: Map<String, Pair<Str
         return solutions
     }
 
-    fun ghostStepsSolution(): Int {
-        var steps = 0
+    fun ghostStepsSolution(): Long {
         var states = this.connections.keys.filter { it.last() == 'A' }
+        val solutionsEachState = states.map { ghostSolutions(it) }
 
-        while (states.any { it.last() != 'Z' }) {
-            val stepVal = this.directions[steps % this.directions.count()]
-            states = states.map { state ->
-                this.connections[state]!!.toList()[stepVal]
-            }
-            steps++
-        }
-        return steps
+        val repeatingLengths = solutionsEachState.map { (it.last().endIndex - it.last().startIndex).toLong() }
+
+        val solutionLength = Utils.calculateLCM(repeatingLengths)
+
+
+        return solutionLength
     }
+
 
 }
