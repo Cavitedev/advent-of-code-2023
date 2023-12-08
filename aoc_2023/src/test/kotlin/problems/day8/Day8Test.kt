@@ -12,4 +12,10 @@ class Day8Test {
         Assertions.assertEquals(19783, desertMap.stepsSolution())
     }
 
+    @Test
+    fun part2() {
+        val desertMap = DesertMap(readInput("day8/input"))
+        Assertions.assertEquals(19783, desertMap.ghostStepsSolution())
+    }
+
 }

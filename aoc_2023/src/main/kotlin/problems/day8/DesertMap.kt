@@ -33,4 +33,43 @@ class DesertMap(val directions: List<Int>, val connections: Map<String, Pair<Str
 
     }
 
+    fun ghostSolutions(state: String): List<GhostMapSolution> {
+
+        val solutions: MutableList<GhostMapSolution> = mutableListOf()
+
+        var initialStep = 0
+        var initialState = state
+        var steps = 0
+        var currentState = state
+        while (true) {
+            val stepVal = this.directions[steps % this.directions.count()]
+            currentState = this.connections[currentState]!!.toList()[stepVal]
+            steps++
+            if (currentState.last() == 'Z') {
+                val sol = GhostMapSolution(initialState, initialStep, currentState, steps)
+                solutions.add(sol)
+                initialState = currentState
+                initialStep = steps
+                if (solutions.any { it.startSite == currentState }) break
+            }
+        }
+
+
+        return solutions
+    }
+
+    fun ghostStepsSolution(): Int {
+        var steps = 0
+        var states = this.connections.keys.filter { it.last() == 'A' }
+
+        while (states.any { it.last() != 'Z' }) {
+            val stepVal = this.directions[steps % this.directions.count()]
+            states = states.map { state ->
+                this.connections[state]!!.toList()[stepVal]
+            }
+            steps++
+        }
+        return steps
+    }
+
 }

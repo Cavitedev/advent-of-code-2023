@@ -26,4 +26,5 @@ class DesertMapTest {
     fun checkStepsSolution() {
         assertEquals(6, desertMap.stepsSolution())
     }
+
 }
