@@ -32,5 +32,11 @@ class Utils {
 
             return num1
         }
+
+        val numbersRegex = Regex("""-?\d+""")
+
+        fun numbersInLineString(line: String): List<Long> {
+            return numbersRegex.findAll(line).map { it.value.toLong() }.toList()
+        }
     }
 }
