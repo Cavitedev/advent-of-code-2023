@@ -9,9 +9,15 @@ class InstabilitySensor {
         this.lines = input.map { SensorLine(Utils.numbersInLineString(it)) }
     }
 
-    fun sumPredictedNumbers(): Long {
+    fun sumExtrapolatedForwardNumbers(): Long {
         return this.lines.fold(0) { acc, line ->
-            acc + line.predictNextNumber()
+            acc + line.extrapolateForward()
+        }
+    }
+
+    fun sumExtrapolatedBackwardNumbers(): Long {
+        return this.lines.fold(0) { acc, line ->
+            acc + line.extrapolateBackward()
         }
     }
 

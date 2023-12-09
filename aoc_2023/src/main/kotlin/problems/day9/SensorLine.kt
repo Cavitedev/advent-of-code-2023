@@ -4,17 +4,17 @@ package problems.day9
 data class SensorLine(val numbers: List<Long>) {
 
     val extrapolations: MutableList<List<Long>> = mutableListOf()
-    fun predictNextNumber(): Long {
+    fun extrapolateForward(): Long {
         return try {
             extrapolations.add(numbers)
-            inlinePredictNextNumber(numbers)
+            inlineExtrapolateForward(numbers)
         } catch (e: Exception) {
             numbers.last()
         }
 
     }
 
-    private fun inlinePredictNextNumber(numbersList: List<Long>): Long {
+    private fun inlineExtrapolateForward(numbersList: List<Long>): Long {
         val extrapolation = extrapolate(numbersList)
         extrapolations.add(extrapolation)
         if (extrapolation.isEmpty()) {
@@ -25,7 +25,19 @@ data class SensorLine(val numbers: List<Long>) {
         if (extrapolation.all { it == 0L }) {
             return numbersList.last()
         }
-        return numbersList.last() + inlinePredictNextNumber(extrapolation)
+        return numbersList.last() + inlineExtrapolateForward(extrapolation)
+    }
+
+
+    private fun extrapolate(numbersList: List<Long>): List<Long> {
+
+        val returnList: MutableList<Long> = mutableListOf()
+
+        for (i in 0..<numbersList.size - 1) {
+            returnList.add(numbersList[i + 1] - numbersList[i])
+        }
+
+        return returnList
     }
 
     private fun displayExtrapolations(): String {
@@ -38,16 +50,29 @@ data class SensorLine(val numbers: List<Long>) {
         return output
     }
 
-    private fun extrapolate(numbersList: List<Long>): List<Long> {
 
-        val returnList: MutableList<Long> = mutableListOf()
-
-        for (i in 0..<numbersList.size - 1) {
-            returnList.add(numbersList[i + 1] - numbersList[i])
-        }
-
-        return returnList
+    fun extrapolateBackward(): Long {
+        return inlineExtrapolateBackward(numbers)
     }
+
+    private fun inlineExtrapolateBackward(numbersList: List<Long>): Long {
+        val extrapolation = extrapolate(numbersList)
+        if (extrapolation.all { it == 0L }) {
+            return numbersList.first()
+        }
+        return numbersList.first() - inlineExtrapolateBackward(extrapolation)
+    }
+
+//    private fun extrapolateBackwards(numbersList: List<Long>): List<Long> {
+//
+//        val returnList: MutableList<Long> = mutableListOf()
+//
+//        for (i in numbersList.size - 1 downTo 1) {
+//            returnList.add(numbersList[i] - numbersList[i - 1])
+//        }
+//
+//        return returnList
+//    }
 
 
 }

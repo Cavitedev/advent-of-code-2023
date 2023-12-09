@@ -10,13 +10,15 @@ class Day9Test {
     @Test
     fun part1() {
         val instabilitySensor = InstabilitySensor(readInput("day9/input"))
-        Assertions.assertEquals(1898776583L, instabilitySensor.sumPredictedNumbers())
+        Assertions.assertEquals(1898776583L, instabilitySensor.sumExtrapolatedForwardNumbers())
     }
 
-//    @Test
-//    fun part2() {
-//        val desertMap = DesertMap(readInput("day8/input"))
-//        Assertions.assertEquals(9177460370549L, desertMap.ghostStepsSolution())
-//    }
+    // Too High 389239739
+
+    @Test
+    fun part2() {
+        val instabilitySensor = InstabilitySensor(readInput("day9/input"))
+        Assertions.assertEquals(1100L, instabilitySensor.sumExtrapolatedBackwardNumbers())
+    }
 
 }

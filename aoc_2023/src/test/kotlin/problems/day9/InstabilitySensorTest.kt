@@ -21,7 +21,12 @@ class InstabilitySensorTest {
     }
 
     @Test
-    fun sumPredictions() {
-        assertEquals(114L, instabilitySensor.sumPredictedNumbers())
+    fun sumExtrapolatedForwardNumbers() {
+        assertEquals(114L, instabilitySensor.sumExtrapolatedForwardNumbers())
+    }
+
+    @Test
+    fun sumExtrapolatedBackwardNumbers() {
+        assertEquals(2L, instabilitySensor.sumExtrapolatedBackwardNumbers())
     }
 }
