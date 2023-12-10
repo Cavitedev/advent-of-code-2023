@@ -1,7 +1,11 @@
 package problems.day10
 
+import java.util.*
+
 class PipeMaze() {
     lateinit var maze: List<List<Pipe>>
+    lateinit var mainLoop: Set<Pipe>
+    lateinit var startPipe: Pipe
 
     constructor(lines: List<String>) : this() {
         this.maze = lines.mapIndexed { i, line ->
@@ -45,15 +49,47 @@ class PipeMaze() {
                 }
             }
         }
+        val startPipe = maze.flatten().find { it.north && it.east && it.south && it.west }!!
+        startPipe.closeUnconnectedConnections(this)
+        this.startPipe = startPipe
+
+        this.mainLoop = calcMainLoop()
     }
 
-    fun startPipe(): Pipe {
-        return maze.flatten().find { it.north && it.east && it.south && it.west }!!
+
+    private fun calcMainLoop(): Set<Pipe> {
+
+        val startPipe = startPipe
+        val initNode = PipeNode(startPipe, null, 0)
+        val costComparator: Comparator<PipeNode> = compareBy { it.cost }
+        val nodesQueue = PriorityQueue(costComparator)
+        nodesQueue.add(initNode)
+        val visitedPipes = mutableSetOf(startPipe)
+
+
+        while (!nodesQueue.isEmpty()) {
+            val node = nodesQueue.poll()!!
+            val neighbours = node.pipe.findNeighbours(this)
+            for (neighbour in neighbours) {
+                if (visitedPipes.contains(neighbour))
+                    continue
+                visitedPipes.add(neighbour)
+                nodesQueue.add(PipeNode(neighbour, node, node.cost + 1))
+
+            }
+        }
+
+        return visitedPipes
     }
 
     fun furtherstDistanceNode(): Int {
-        val search = PipeSearch(this)
-        return search.furtherDistanceNode()
+        return mainLoop.size / 2
     }
+
+    fun innerTilesCount(): Int {
+        val search = PipeSearch(this)
+        return (this.maze.size * this.maze[0].size) - this.mainLoop.size - search.outerTiles().size
+    }
+
 
 }

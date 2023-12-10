@@ -18,12 +18,11 @@ class PipeMazeTest {
     fun getMaze() {
         assertEquals(5, pipeMaze.maze.size)
         assertEquals(5, pipeMaze.maze[0].size)
-        print(pipeMaze.maze)
     }
 
     @Test
     fun getNeighbours() {
-        val startPipe = pipeMaze.startPipe()
+        val startPipe = pipeMaze.startPipe
         assertEquals(2, startPipe.findNeighbours(pipeMaze).count())
     }
 

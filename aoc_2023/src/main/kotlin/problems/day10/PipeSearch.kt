@@ -1,36 +1,67 @@
 package problems.day10
 
-import java.util.*
-
 class PipeSearch(val pipeMaze: PipeMaze) {
 
+    val outerTilesSet = mutableSetOf<Pipe>()
+    val squeezePipesSet = mutableSetOf<SqueezePipes>()
+    val pendingCheckTiles = mutableListOf<Pipe>()
 
-    fun furtherDistanceNode(): Int {
+    fun outerTiles(): Set<Pipe> {
 
-        val startPipe = pipeMaze.startPipe()
-        val initNode = PipeNode(startPipe, null, 0)
-        val costComparator: Comparator<PipeNode> = compareBy { it.cost }
-        val nodesQueue = PriorityQueue(costComparator)
-        nodesQueue.add(initNode)
-        val visitedPipes = mutableSetOf(startPipe)
 
-        var highestLength = 0
-
-        while (!nodesQueue.isEmpty()) {
-            val node = nodesQueue.poll()!!
-            val neighbours = node.pipe.findNeighbours(pipeMaze)
-            for (neighbour in neighbours) {
-                if (visitedPipes.contains(neighbour))
-                    continue
-                visitedPipes.add(neighbour)
-                nodesQueue.add(PipeNode(neighbour, node, node.cost + 1))
-                if (node.cost + 1 >= highestLength) {
-                    highestLength = node.cost + 1
-                }
-            }
+        for (row in 0..<pipeMaze.maze.size) {
+            pendingCheckTiles.add(pipeMaze.maze[row][0])
+            pendingCheckTiles.add(pipeMaze.maze[row][pipeMaze.maze[0].size - 1])
         }
 
-        return highestLength
+        for (col in 1..<pipeMaze.maze[0].size - 1) {
+            pendingCheckTiles.add(pipeMaze.maze[0][col])
+            pendingCheckTiles.add(pipeMaze.maze[pipeMaze.maze.size - 1][col])
+        }
+
+        while (pendingCheckTiles.isNotEmpty()) {
+            val nextTile = pendingCheckTiles.removeAt(0)
+            connectOuterTile(nextTile)
+        }
+
+        return outerTilesSet
+    }
+
+    private fun connectOuterTile(tile: Pipe) {
+        if (outerTilesSet.contains(tile) || pipeMaze.mainLoop.contains(tile))
+            return
+        outerTilesSet.add(tile)
+
+        val neighbours = tile.getSqueezePipes(pipeMaze)
+        neighbours.forEach { connectSqueezePipes(it) }
+
+    }
+
+    private fun connectSqueezePipes(squeeze: SqueezePipes) {
+        if (squeezePipesSet.contains(squeeze)) {
+            return
+        } else {
+            squeezePipesSet.add(squeeze)
+        }
+
+        var newOuterTile = false
+
+        if (!pipeMaze.mainLoop.contains(squeeze.pipe1) && !outerTilesSet.contains(squeeze.pipe1)) {
+            pendingCheckTiles.add(squeeze.pipe1)
+            newOuterTile = true
+        }
+        if (!pipeMaze.mainLoop.contains(squeeze.pipe2) && !outerTilesSet.contains(squeeze.pipe2)) {
+            pendingCheckTiles.add(squeeze.pipe2)
+            newOuterTile = true
+        }
+        if (newOuterTile) return
+
+        val nextSqueeze = squeeze.continueSqueeze(pipeMaze) ?: return
+
+
+
+        connectSqueezePipes(nextSqueeze)
+
     }
 
 }

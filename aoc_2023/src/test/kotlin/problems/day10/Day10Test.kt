@@ -12,10 +12,12 @@ class Day10Test {
         val pipeMaze = PipeMaze(readInput("day10/input"))
         Assertions.assertEquals(6870, pipeMaze.furtherstDistanceNode())
     }
-//    @Test
-//    fun part2() {
-//        val instabilitySensor = InstabilitySensor(readInput("day9/input"))
-//        Assertions.assertEquals(1100L, instabilitySensor.sumExtrapolatedBackwardNumbers())
-//    }
+
+    // Too High 498
+    @Test
+    fun part2() {
+        val pipeMaze = PipeMaze(readInput("day10/input"))
+        Assertions.assertNotEquals(498, pipeMaze.innerTilesCount())
+    }
 
 }
