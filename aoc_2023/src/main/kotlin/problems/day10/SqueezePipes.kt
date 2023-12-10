@@ -1,11 +1,11 @@
 package problems.day10
 
 data class SqueezePipes(val pipe1: Pipe, val pipe2: Pipe, val squeezeDirection: SqueezeDirection) {
-    fun continueSqueeze(pipeMaze: PipeMaze): SqueezePipes? {
+    fun continueSqueeze(pipeMaze: PipeMaze): List<SqueezePipes> {
 
-        val nextPipes = this.squeezeDirection.nextSqueeze(pipe1, pipe2, pipeMaze) ?: return null
+        val nextPipes = this.squeezeDirection.nextSqueeze(this, pipeMaze)
 
-        return SqueezePipes(nextPipes[0], nextPipes[1], squeezeDirection)
+        return nextPipes
 
 
     }

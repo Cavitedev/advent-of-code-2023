@@ -56,11 +56,14 @@ class PipeSearch(val pipeMaze: PipeMaze) {
         }
         if (newOuterTile) return
 
-        val nextSqueeze = squeeze.continueSqueeze(pipeMaze) ?: return
+        val nextSqueeze = squeeze.continueSqueeze(pipeMaze)
 
 
 
-        connectSqueezePipes(nextSqueeze)
+        nextSqueeze.forEach {
+            connectSqueezePipes(it)
+        }
+
 
     }
 

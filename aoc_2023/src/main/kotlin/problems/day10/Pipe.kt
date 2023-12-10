@@ -2,30 +2,6 @@ package problems.day10
 
 class Pipe(var west: Boolean, var north: Boolean, var east: Boolean, var south: Boolean, val i: Int, val j: Int) {
 
-    fun getAllNeighbours(pipeMaze: PipeMaze): List<Pipe> {
-        val pipesFound = mutableListOf<Pipe>()
-
-        if (j != 0) {
-            val pipe = pipeMaze.maze[i][j - 1]
-            pipesFound.add(pipe)
-        }
-        if (i != 0) {
-            val pipe = pipeMaze.maze[i - 1][j]
-            pipesFound.add(pipe)
-        }
-
-        if (j != pipeMaze.maze[0].size - 1) {
-            val pipe = pipeMaze.maze[i][j + 1]
-            pipesFound.add(pipe)
-        }
-
-        if (i != pipeMaze.maze.size - 1) {
-            val pipe = pipeMaze.maze[i + 1][j]
-            pipesFound.add(pipe)
-        }
-
-        return pipesFound
-    }
 
     fun findNeighbours(pipeMaze: PipeMaze): List<Pipe> {
 
@@ -78,7 +54,7 @@ class Pipe(var west: Boolean, var north: Boolean, var east: Boolean, var south: 
             val rightNeighbour = pipeMaze.maze[i][j + 1]
             if (i != 0) {
                 val northRightNeighbour = pipeMaze.maze[i - 1][j + 1]
-                squeeze.add(SqueezePipes(rightNeighbour, northRightNeighbour, EastSqueezeDirection()))
+                squeeze.add(SqueezePipes(northRightNeighbour, rightNeighbour, EastSqueezeDirection()))
             }
 
             if (i != pipeMaze.maze.size - 1) {

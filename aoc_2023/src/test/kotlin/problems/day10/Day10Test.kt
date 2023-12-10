@@ -13,11 +13,11 @@ class Day10Test {
         Assertions.assertEquals(6870, pipeMaze.furtherstDistanceNode())
     }
 
-    // Too High 498
+
     @Test
     fun part2() {
         val pipeMaze = PipeMaze(readInput("day10/input"))
-        Assertions.assertNotEquals(498, pipeMaze.innerTilesCount())
+        Assertions.assertEquals(287, pipeMaze.innerTilesCount())
     }
 
 }
