@@ -6,14 +6,13 @@ import problems.utils.readInput
 
 class Day9Test {
 
-    // 1712182154 too low
+
     @Test
     fun part1() {
         val instabilitySensor = InstabilitySensor(readInput("day9/input"))
         Assertions.assertEquals(1898776583L, instabilitySensor.sumExtrapolatedForwardNumbers())
     }
 
-    // Too High 389239739
 
     @Test
     fun part2() {
