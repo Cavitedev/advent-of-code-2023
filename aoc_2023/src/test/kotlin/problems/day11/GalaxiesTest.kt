@@ -22,13 +22,25 @@ class GalaxiesTest {
     @Test
     fun expandGalaxies() {
         assertEquals(Galaxy(4, 6), galaxies.galaxiesList[3])
-        galaxies.expand()
+        galaxies.expand(1)
         assertEquals(Galaxy(5, 8), galaxies.galaxiesList[3])
     }
 
     @Test
     fun sumDistances() {
-        galaxies.expand()
+        galaxies.expand(1)
         assertEquals(374L, galaxies.sumDistances())
+    }
+
+    @Test
+    fun sumDistanceExpand10() {
+        galaxies.expand(9)
+        assertEquals(1030L, galaxies.sumDistances())
+    }
+
+    @Test
+    fun sumDistanceExpand100() {
+        galaxies.expand(99)
+        assertEquals(8410L, galaxies.sumDistances())
     }
 }

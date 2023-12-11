@@ -21,7 +21,7 @@ class Galaxies(lines: List<String>) {
         this.galaxiesList = galaxiesMut
     }
 
-    fun expand() {
+    fun expand(times: Int) {
         val iSorted = this.galaxiesList.sortedBy { it.i }
 
         var lastI = iSorted.first().i
@@ -29,7 +29,7 @@ class Galaxies(lines: List<String>) {
         for (galaxy in iSorted.drop(1)) {
             val dif = galaxy.i - lastI
             if (dif > 1)
-                expandAmount += dif - 1
+                expandAmount += ((dif - 1) * times)
             lastI = galaxy.i
             galaxy.i += expandAmount
         }
@@ -41,15 +41,15 @@ class Galaxies(lines: List<String>) {
         for (galaxy in jSorted.drop(1)) {
             val dif = galaxy.j - lastJ
             if (dif > 1)
-                expandAmount += dif - 1
+                expandAmount += (dif - 1) * times
             lastJ = galaxy.j
             galaxy.j += expandAmount
         }
     }
 
     fun sumDistances(): Long {
-        return this.galaxiesList.foldIndexed(0) { index, acc, galaxy ->
-            acc + this.galaxiesList.drop(index + 1).fold(0) { acc2, galaxy2 ->
+        return this.galaxiesList.foldIndexed(0L) { index, acc, galaxy ->
+            acc + this.galaxiesList.drop(index + 1).fold(0L) { acc2, galaxy2 ->
                 acc2 + abs(galaxy.i - galaxy2.i) + abs(galaxy.j - galaxy2.j)
             }
         }
