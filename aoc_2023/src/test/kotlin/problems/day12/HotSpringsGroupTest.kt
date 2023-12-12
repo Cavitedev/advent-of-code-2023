@@ -24,4 +24,10 @@ class HotSpringsGroupTest {
     fun sumArrangementsCount() {
         assertEquals(21L, hotSpringsGroup.sumArrangementsCount())
     }
+
+    @Test
+    fun sumArrangementsCountFolded() {
+        this.hotSpringsGroup.foldLines()
+        assertEquals(525152L, hotSpringsGroup.sumArrangementsCount())
+    }
 }

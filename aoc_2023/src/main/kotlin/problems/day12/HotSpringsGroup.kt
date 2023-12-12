@@ -15,8 +15,12 @@ class HotSpringsGroup(val lines: List<String>) {
     }
 
     fun sumArrangementsCount(): Long {
-        return this.springLines.fold(0L) { acc, spring ->
+        return this.springLines.foldIndexed(0L) { i, acc, spring ->
             acc + spring.arrangementsCount()
         }
+    }
+
+    fun foldLines() {
+        this.springLines.forEach { it.fold() }
     }
 }

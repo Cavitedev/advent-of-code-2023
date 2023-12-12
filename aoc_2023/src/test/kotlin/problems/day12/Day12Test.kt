@@ -13,5 +13,12 @@ class Day12Test {
         Assertions.assertEquals(7622L, springsGroup.sumArrangementsCount())
     }
 
+    @Test
+    fun part2() {
+        val springsGroup = HotSpringsGroup(readInput("day12/input"))
+        springsGroup.foldLines()
+        Assertions.assertEquals(4964259839627L, springsGroup.sumArrangementsCount())
+    }
+
 
 }
