@@ -13,5 +13,10 @@ class Day13Test {
         Assertions.assertEquals(37975L, mirrorsValley.sumMirrors())
     }
 
+    @Test
+    fun part2() {
+        val mirrorsValley = SmudgeMirrorsValley(readInput("day13/input"))
+        Assertions.assertEquals(32497L, mirrorsValley.sumMirrors())
+    }
 
 }

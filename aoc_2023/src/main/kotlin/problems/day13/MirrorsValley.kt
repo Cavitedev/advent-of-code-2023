@@ -1,9 +1,11 @@
 package problems.day13
 
-class MirrorsValley(val input: List<String>) {
+open class MirrorsValley(val input: List<String>) {
 
 
-    val patterns: List<MirrorsPattern> = input.joinToString(";").split(";;").map { lineArray ->
+    val patterns: List<MirrorsPattern> = this.getMirrorsPatterns()
+
+    open fun getMirrorsPatterns() = input.joinToString(";").split(";;").map { lineArray ->
         MirrorsPattern(lineArray.split(";").map { it.toList() })
     }
 

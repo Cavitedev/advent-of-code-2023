@@ -2,7 +2,7 @@ package problems.day13
 
 import Utils.Companion.transpose
 
-data class MirrorsPattern(val pattern: List<List<Char>>) {
+open class MirrorsPattern(val pattern: List<List<Char>>) {
 
 
     fun mirrorRow(): Int? {
@@ -13,7 +13,7 @@ data class MirrorsPattern(val pattern: List<List<Char>>) {
         return mirrorCheck(pattern.transpose())
     }
 
-    private fun mirrorCheck(pattern: List<List<Char>>): Int? {
+    open fun mirrorCheck(pattern: List<List<Char>>): Int? {
         for (i in 1..pattern.size - 1) {
             var it = 0
             var matches = true
