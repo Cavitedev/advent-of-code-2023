@@ -38,5 +38,15 @@ class Utils {
         fun numbersInLineString(line: String): List<Long> {
             return numbersRegex.findAll(line).map { it.value.toLong() }.toList()
         }
+
+        fun <T> List<List<T>>.transpose(): List<List<T>> {
+            return if (isNotEmpty() && all { it.size == this[0].size }) {
+                this[0].indices.map { i ->
+                    this.map { row -> row[i] }
+                }
+            } else {
+                emptyList()
+            }
+        }
     }
 }
