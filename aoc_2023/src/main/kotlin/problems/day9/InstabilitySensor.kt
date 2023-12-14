@@ -1,11 +1,11 @@
 package problems.day9
 
-import Utils
+import problems.utils.Utils
 
-class InstabilitySensor {
+class InstabilitySensor(input: List<String>) {
     val lines: List<SensorLine>
 
-    constructor(input: List<String>) {
+    init {
         this.lines = input.map { SensorLine(Utils.numbersInLineString(it)) }
     }
 

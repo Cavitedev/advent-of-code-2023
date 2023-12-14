@@ -1,6 +1,6 @@
 package problems.day12
 
-import Utils
+import problems.utils.Utils
 
 class HotSpringsGroup(val lines: List<String>) {
 

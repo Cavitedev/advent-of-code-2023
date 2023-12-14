@@ -1,6 +1,6 @@
 package problems.day13
 
-import Utils.Companion.transpose
+import problems.utils.Utils.Companion.transpose
 
 open class MirrorsPattern(val pattern: List<List<Char>>) {
 

@@ -1,6 +1,6 @@
 package problems.day8
 
-import Utils
+import problems.utils.Utils
 
 class DesertMap(val directions: List<Int>, val connections: Map<String, Pair<String, String>>) {
 
@@ -61,7 +61,7 @@ class DesertMap(val directions: List<Int>, val connections: Map<String, Pair<Str
     }
 
     fun ghostStepsSolution(): Long {
-        var states = this.connections.keys.filter { it.last() == 'A' }
+        val states = this.connections.keys.filter { it.last() == 'A' }
         val solutionsEachState = states.map { ghostSolutions(it) }
 
         val repeatingLengths = solutionsEachState.map { (it.last().endIndex - it.last().startIndex).toLong() }

@@ -13,4 +13,12 @@ class Day14Test {
         Assertions.assertEquals(106997L, parabolicDish.sumLoad())
     }
 
+    @Test
+    fun part2() {
+        val parabolicDish = ParabolicDish(readInput("day14/input"))
+        parabolicDish.tiltCycles(1000000000L)
+        // Higher than 99621
+        Assertions.assertEquals(99641L, parabolicDish.sumLoad())
+    }
+
 }

@@ -1,3 +1,5 @@
+package problems.utils
+
 import kotlin.math.abs
 
 class Utils {
@@ -47,6 +49,36 @@ class Utils {
             } else {
                 emptyList()
             }
+        }
+
+        fun <T> List<List<T>>.rotateClockwise(): List<List<T>> {
+            val rows = this.size
+            val cols = this[0].size
+
+            val rotatedMatrix = MutableList(cols) { MutableList(rows) { this[0][0] } }
+
+            for (i in 0 until rows) {
+                for (j in 0 until cols) {
+                    rotatedMatrix[j][rows - 1 - i] = this[i][j]
+                }
+            }
+
+            return rotatedMatrix
+        }
+
+        fun <T> List<List<T>>.rotateAnticlockwise(): List<List<T>> {
+            val rows = this.size
+            val cols = this[0].size
+
+            val rotatedMatrix = MutableList(cols) { MutableList(rows) { this[0][0] } }
+
+            for (i in 0 until rows) {
+                for (j in 0 until cols) {
+                    rotatedMatrix[cols - 1 - j][i] = this[i][j]
+                }
+            }
+
+            return rotatedMatrix
         }
     }
 }
