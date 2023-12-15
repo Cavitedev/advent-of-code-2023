@@ -12,5 +12,11 @@ class Day15Test {
         Assertions.assertEquals(498538L, lensHashes.sumHashResults())
     }
 
+    @Test
+    fun part2() {
+        val lensHashes = LensHashes(readInput("day15/input"))
+        Assertions.assertEquals(286278L, lensHashes.focusingPower())
+    }
+
 
 }

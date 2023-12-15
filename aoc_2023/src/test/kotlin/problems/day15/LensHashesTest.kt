@@ -23,4 +23,9 @@ class LensHashesTest {
     fun sumHashes() {
         assertEquals(1320L, lensHashes.sumHashResults())
     }
+
+    @Test
+    fun focusingPower() {
+        assertEquals(145L, lensHashes.focusingPower())
+    }
 }
