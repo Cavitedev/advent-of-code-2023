@@ -17,12 +17,15 @@ class MirrorCave(lines: List<String>) {
     fun energizedBeans(startNode: BeamNode): Int {
 
         val visitedCells = mutableSetOf(Pair(0, 0))
+        val visitedNodes: MutableSet<BeamNode> = mutableSetOf()
         val activeBeans = mutableListOf(startNode)
 
         while (activeBeans.isNotEmpty()) {
-            val curBean = activeBeans.removeFirst()
-            visitedCells.add(Pair(curBean.i, curBean.j))
-            val nextBeans = curBean.nextNodes(this)
+            val curBeam = activeBeans.removeFirst()
+            if (visitedNodes.contains(curBeam)) continue
+            visitedNodes.add(curBeam)
+            visitedCells.add(Pair(curBeam.i, curBeam.j))
+            val nextBeans = curBeam.nextNodes(this)
             activeBeans.addAll(0, nextBeans)
         }
 

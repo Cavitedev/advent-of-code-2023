@@ -9,7 +9,7 @@ class Day16Test {
     @Test
     fun part1() {
         val mirrorCave = MirrorCave(readInput("day16/input"))
-        Assertions.assertEquals(498538, mirrorCave.energizedBeansTopLeft())
+        Assertions.assertEquals(7623, mirrorCave.energizedBeansTopLeft())
     }
 
 
