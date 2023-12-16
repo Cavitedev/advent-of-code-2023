@@ -25,4 +25,9 @@ class MirrorCaveTest {
     fun energizedBeans() {
         assertEquals(46, cave.energizedBeansTopLeft())
     }
+
+    @Test
+    fun bestEnergizedBeans() {
+        assertEquals(51, cave.bestEnergizedBeanAllDirs())
+    }
 }

@@ -11,12 +11,28 @@ class MirrorCave(lines: List<String>) {
     }
 
     fun energizedBeansTopLeft(): Int {
-        return energizedBeans(BeamNode(0, -1, EastBeamDir.getInstance())) - 1
+        return energizedBeans(BeamNode(0, -1, EastBeamDir.getInstance()))
+    }
+
+    fun bestEnergizedBeanAllDirs(): Int {
+        val initBeans = mutableListOf<BeamNode>()
+        for (i in grid.indices) {
+            initBeans.add(BeamNode(i, -1, EastBeamDir.getInstance()))
+            initBeans.add(BeamNode(i, grid[0].size, WestBeamDir.getInstance()))
+        }
+
+        for (j in grid[0].indices) {
+            initBeans.add(BeamNode(-1, j, SouthBeamDir.getInstance()))
+            initBeans.add(BeamNode(grid.size, j, NorthBeamDir.getInstance()))
+        }
+
+        val results = initBeans.map { energizedBeans(it) }
+        return results.max()
     }
 
     fun energizedBeans(startNode: BeamNode): Int {
 
-        val visitedCells = mutableSetOf(Pair(0, 0))
+        val visitedCells = mutableSetOf<Pair<Int, Int>>()
         val visitedNodes: MutableSet<BeamNode> = mutableSetOf()
         val activeBeans = mutableListOf(startNode)
 
@@ -29,7 +45,7 @@ class MirrorCave(lines: List<String>) {
             activeBeans.addAll(0, nextBeans)
         }
 
-        return visitedCells.size
+        return visitedCells.size - 1
     }
 
 }
