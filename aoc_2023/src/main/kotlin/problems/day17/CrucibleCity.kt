@@ -9,4 +9,9 @@ class CrucibleCity(lines: List<String>) {
         return search.minimumHeastLoss()
     }
 
+    fun minimumHeastLossUltraCrucible(): Int {
+        val search = UltraCrucibleSearch(this)
+        return search.minimumHeastLoss()
+    }
+
 }

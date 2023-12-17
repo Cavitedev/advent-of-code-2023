@@ -12,5 +12,11 @@ class Day17Test {
         Assertions.assertEquals(859, city.minimumHeastLoss())
     }
 
+    @Test
+    fun part2() {
+        val city = CrucibleCity(readInput("day17/input"))
+        Assertions.assertEquals(1027, city.minimumHeastLossUltraCrucible())
+    }
+
 
 }

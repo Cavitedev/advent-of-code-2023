@@ -24,4 +24,9 @@ class CrucibleCityTest {
     fun minimumHeatLoss() {
         assertEquals(102, city.minimumHeastLoss())
     }
+
+    @Test
+    fun minimumHeatLossUltraCrucible() {
+        assertEquals(94, city.minimumHeastLossUltraCrucible())
+    }
 }

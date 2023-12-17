@@ -2,7 +2,7 @@ package problems.day17
 
 import java.util.*
 
-class CrucibleSearch(val city: CrucibleCity) {
+open class CrucibleSearch(val city: CrucibleCity) {
 
     fun minimumHeastLoss(): Int {
 
@@ -32,10 +32,7 @@ class CrucibleSearch(val city: CrucibleCity) {
 
     fun getSuccessors(node: CrucibleNode): List<CrucibleNode> {
 
-        val nextDirs = mutableListOf(node.dir.rotateAntiClockwise(), node.dir.rotateClockwise())
-        if (node.repeatedDirs() < 3) {
-            nextDirs.add(node.dir)
-        }
+        val nextDirs = nextDirs(node)
 
         val nextNodes = nextDirs.mapNotNull { dir ->
             val nextPos = dir.nextPos(node.i, node.j, this.city.grid)
@@ -49,7 +46,15 @@ class CrucibleSearch(val city: CrucibleCity) {
         return nextNodes
     }
 
-    fun isGoal(node: CrucibleNode): Boolean {
+    open fun nextDirs(node: CrucibleNode): List<CrucibleDirection> {
+        val nextDirs = mutableListOf(node.dir.rotateAntiClockwise(), node.dir.rotateClockwise())
+        if (node.repeatedDirs() < 3) {
+            nextDirs.add(node.dir)
+        }
+        return nextDirs
+    }
+
+    open fun isGoal(node: CrucibleNode): Boolean {
         return node.i == this.city.grid.size - 1 && node.j == this.city.grid[0].size - 1
     }
 
