@@ -62,7 +62,7 @@ open class CrucibleSearch(val city: CrucibleCity) {
 
     open fun nextDirs(node: CrucibleNode): List<CrucibleDirection> {
         val nextDirs = mutableListOf(node.dir.rotateAntiClockwise(), node.dir.rotateClockwise())
-        if (node.repeatedDirs() < 3) {
+        if (node.repeatedDirs < 3) {
             nextDirs.add(node.dir)
         }
         return nextDirs

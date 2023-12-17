@@ -10,6 +10,7 @@ class CrucibleNode(
 ) {
 
     val fCost = gCost + hCost
+    val repeatedDirs = repeatedDirs()
 
     fun repeatedDirs(): Int {
         var repeats = 1
@@ -32,7 +33,7 @@ class CrucibleNode(
         if (i != other.i) return false
         if (j != other.j) return false
         if (dir != other.dir) return false
-        if (repeatedDirs() != other.repeatedDirs()) return false
+        if (repeatedDirs != other.repeatedDirs) return false
 
         return true
     }
@@ -40,7 +41,7 @@ class CrucibleNode(
     override fun hashCode(): Int {
         var result = i
         result = 31 * result + j
-        result = 31 * result + repeatedDirs()
+        result = 31 * result + repeatedDirs
         result = 31 * result + dir.hashCode()
         return result
     }

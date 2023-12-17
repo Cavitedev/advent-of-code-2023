@@ -3,7 +3,7 @@ package problems.day17
 class UltraCrucibleSearch(city: CrucibleCity) : CrucibleSearch(city) {
 
     override fun nextDirs(node: CrucibleNode): List<CrucibleDirection> {
-        val repeatedDirs = node.repeatedDirs()
+        val repeatedDirs = node.repeatedDirs
         if (repeatedDirs < 4) {
             return listOf(node.dir)
         }
