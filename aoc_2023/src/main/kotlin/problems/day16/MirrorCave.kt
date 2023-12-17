@@ -26,7 +26,8 @@ class MirrorCave(lines: List<String>) {
             initBeans.add(BeamNode(grid.size, j, NorthBeamDir.getInstance()))
         }
 
-        val results = initBeans.map { energizedBeans(it) }
+        // Parallel code
+        val results = initBeans.parallelStream().map { energizedBeans(it) }.toList()
         return results.max()
     }
 
