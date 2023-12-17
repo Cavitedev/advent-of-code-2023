@@ -1,7 +1,15 @@
 package problems.day17
 
-class CrucibleNode(val i: Int, val j: Int, val cost: Int, val dir: CrucibleDirection, val lastNode: CrucibleNode?) {
+class CrucibleNode(
+    val i: Int,
+    val j: Int,
+    val gCost: Int,
+    hCost: Int,
+    val dir: CrucibleDirection,
+    val lastNode: CrucibleNode?
+) {
 
+    val fCost = gCost + hCost
 
     fun repeatedDirs(): Int {
         var repeats = 1
@@ -13,8 +21,8 @@ class CrucibleNode(val i: Int, val j: Int, val cost: Int, val dir: CrucibleDirec
         return repeats
     }
 
-    fun generateNextNode(i: Int, j: Int, addCost: Int, dir: CrucibleDirection): CrucibleNode {
-        return CrucibleNode(i, j, cost + addCost, dir, this)
+    fun generateNextNode(i: Int, j: Int, addCost: Int, hCost: Int, dir: CrucibleDirection): CrucibleNode {
+        return CrucibleNode(i, j, gCost + addCost, hCost, dir, this)
     }
 
     override fun equals(other: Any?): Boolean {
