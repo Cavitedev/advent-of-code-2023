@@ -14,14 +14,14 @@ open class CrucibleSearch(val city: CrucibleCity) {
         openedNodes.add(node1)
         openedNodes.add(node2)
 
-        var openedNodesCount = 0
+//        var openedNodesCount = 0
 
         while (openedNodes.isNotEmpty()) {
-            openedNodesCount++
+//            openedNodesCount++
             val nextNode = openedNodes.poll()
 
             if (isGoal(nextNode)) {
-                println(openedNodesCount)
+//                println(openedNodesCount)
                 return nextNode.gCost
             }
 
@@ -34,11 +34,11 @@ open class CrucibleSearch(val city: CrucibleCity) {
         return -1
     }
 
-    fun hCost(i: Int, j: Int): Int {
+    private fun hCost(i: Int, j: Int): Int {
         return this.city.grid.size - 1 - i + this.city.grid[0].size - 1 - j
     }
 
-    fun getSuccessors(node: CrucibleNode): List<CrucibleNode> {
+    private fun getSuccessors(node: CrucibleNode): List<CrucibleNode> {
 
         val nextDirs = nextDirs(node)
 
