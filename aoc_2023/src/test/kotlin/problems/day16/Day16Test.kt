@@ -14,7 +14,6 @@ class Day16Test {
 
     @Test
     fun part2() {
-        // 8245 too high
         val mirrorCave = MirrorCave(readInput("day16/input"))
         Assertions.assertEquals(8244, mirrorCave.bestEnergizedBeanAllDirs())
     }
