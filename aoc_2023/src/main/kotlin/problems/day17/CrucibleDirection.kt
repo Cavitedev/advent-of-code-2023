@@ -51,6 +51,16 @@ class WestCrucibleDir : CrucibleDirection() {
         return SouthCrucibleDir.getInstance()
     }
 
+    override fun hashCode(): Int {
+        return 1
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is WestCrucibleDir) return false
+        return true
+    }
+
 }
 
 class NorthCrucibleDir : CrucibleDirection() {
@@ -89,6 +99,16 @@ class NorthCrucibleDir : CrucibleDirection() {
 
     override fun rotateAntiClockwise(): CrucibleDirection {
         return WestCrucibleDir.getInstance()
+    }
+
+    override fun hashCode(): Int {
+        return 2
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is NorthCrucibleDir) return false
+        return true
     }
 
 }
@@ -132,6 +152,16 @@ class EastCrucibleDir : CrucibleDirection() {
     override fun rotateAntiClockwise(): CrucibleDirection {
         return NorthCrucibleDir.getInstance()
     }
+
+    override fun hashCode(): Int {
+        return 3
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is EastCrucibleDir) return false
+        return true
+    }
 }
 
 class SouthCrucibleDir : CrucibleDirection() {
@@ -170,6 +200,16 @@ class SouthCrucibleDir : CrucibleDirection() {
 
     override fun rotateAntiClockwise(): CrucibleDirection {
         return EastCrucibleDir.getInstance()
+    }
+
+    override fun hashCode(): Int {
+        return 4
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SouthCrucibleDir) return false
+        return true
     }
 
 }
