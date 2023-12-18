@@ -1,12 +1,10 @@
 package problems.day18
 
-import problems.utils.Utils
-
-class LavaTrench(lines: List<String>) {
+open class LavaTrench(lines: List<String>) {
 
     val digList: List<DigData> = lines.map { line ->
-        val (dir, amount, color) = line.split(" ")
-        val hexColor = Utils.colorStrInLineStr(color)!!
+        val (dir, amount) = line.split(" ")
+
         DigData(
             when (dir) {
                 "R" -> {
@@ -30,58 +28,120 @@ class LavaTrench(lines: List<String>) {
                 }
             },
             amount.toInt(),
-            hexColor.toInt(16)
 
-        )
+            )
     }
 
-    var cells: MutableSet<LavaCell> = mutableSetOf()
 
-    fun setTrenchCells() {
+    fun filledCellsCount(): Long {
+
+        val enhancedDigData = enhancedDigData()
+        var total = enhancedDigData.fold(0L) { acc, dig ->
+            acc + dig.digData.amount
+        }
+
+        for (dig in enhancedDigData) {
+            if (dig.digData.direction.isHorizontal()) {
+                var i = dig.i + 1
+
+                val firstRange: IntRange = dig.toHorizontalRange()
+
+                val adjacentPosJ = dig.digData.direction.nextPos(dig.i, dig.j).second
+
+
+                val wallsToLeft = enhancedDigData.filter { it.isInRow(i) && it.j < adjacentPosJ }
+
+                // Out horizontal
+                if (wallsToLeft.size % 2 == 0) {
+                    continue
+                }
+
+                total += totalRange(firstRange, i, enhancedDigData)
+
+            }
+
+
+        }
+
+        return total
+    }
+
+    private fun totalRange(
+        checkRange: IntRange,
+        i2: Int,
+        enhancedDigData: List<EnhancedDigData>,
+    ): Long {
+        var i = i2
+        var total = 0L
+        val fallRanges: MutableList<IntRange> = mutableListOf(checkRange)
+        while (fallRanges.isNotEmpty()) {
+
+
+            val intersectDirs = enhancedDigData.filter { it.isInRow(i) }
+
+
+            for (intersectDir in intersectDirs) {
+                val intersectRange = intersectDir.toHorizontalRange()
+                val overlappedRanges =
+                    fallRanges.filter {
+
+                        intersectRange.contains(it.first) || intersectRange.contains(it.last)
+
+                    }
+                for (overlapRange in overlappedRanges) {
+                    fallRanges.remove(overlapRange)
+
+                    // Left
+                    if (intersectRange.first > overlapRange.first) {
+                        fallRanges.add(overlapRange.first..intersectRange.first - 1)
+                    }
+
+                    // Right
+                    if (intersectRange.last < overlapRange.last) {
+                        fallRanges.add(intersectRange.last + 1..overlapRange.last)
+                    }
+                }
+
+            }
+            val spacesInRow = fallRanges.fold(0) { acc, range ->
+                acc + range.last - range.first + 1
+            }
+
+
+            if (intersectDirs.size == 2 && intersectDirs.all { it.digData.direction.isVertical() }) {
+                val nextI =
+                    enhancedDigData.filter { it.digData.direction.isHorizontal() && it.i > i }.minOf { it.i }
+                total += spacesInRow * (nextI - i)
+                i = nextI
+
+            }
+
+
+            total += spacesInRow
+            i++
+
+
+        }
+        return total
+    }
+
+
+    fun enhancedDigData(): List<EnhancedDigData> {
+        val returnData = mutableListOf<EnhancedDigData>()
         var i = 0
         var j = 0
 
         for (dig in digList) {
-            for (step in 1..dig.amount) {
-                val currentCell = dig.direction.nextPos(i, j)
-                i = currentCell.first
-                j = currentCell.second
-                cells.add(LavaCell(i, j, dig.color))
-            }
+            returnData.add(EnhancedDigData(i, j, dig))
+            val (i2, j2) = dig.direction.nextPos(i, j)
+            var di = i2 - i
+            var dj = j2 - j
+            di *= dig.amount
+            dj *= dig.amount
+            i += di
+            j += dj
         }
+        return returnData
     }
 
-    fun fillWithEmptyCells() {
-        val firstCellPair = digList[0].direction.nextPos(0, 0)
-        val firstInnerCellPair = digList.last().direction.nextPos(firstCellPair.first, firstCellPair.second)
-        val firstInnerCell = LavaCell(firstInnerCellPair.first, firstInnerCellPair.second, 0)
-
-
-        val openedCells = mutableListOf(firstInnerCell)
-
-        while (openedCells.isNotEmpty()) {
-            val openedCell = openedCells.removeAt(0)
-            val neighbours = neighbours(openedCell.i, openedCell.j)
-            for (neighbour in neighbours) {
-                val neighbourCell = LavaCell(neighbour.first, neighbour.second, 0)
-                if (cells.contains(neighbourCell))
-                    continue
-                openedCells.add(neighbourCell)
-                cells.add(neighbourCell)
-
-            }
-
-        }
-
-
-    }
-
-    fun neighbours(i: Int, j: Int): List<Pair<Int, Int>> {
-        return listOf(
-            WestTrenchDir.getInstance().nextPos(i, j),
-            NorthTrenchDir.getInstance().nextPos(i, j),
-            EastTrenchDir.getInstance().nextPos(i, j),
-            SouthTrenchDir.getInstance().nextPos(i, j)
-        )
-    }
 }

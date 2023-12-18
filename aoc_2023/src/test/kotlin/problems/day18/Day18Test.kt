@@ -9,10 +9,7 @@ class Day18Test {
     @Test
     fun part1() {
         val lavaTrench = LavaTrench(readInput("day18/input"))
-        lavaTrench.setTrenchCells()
-        lavaTrench.fillWithEmptyCells()
-
-        Assertions.assertEquals(31171, lavaTrench.cells.size)
+        Assertions.assertEquals(31171L, lavaTrench.filledCellsCount())
     }
 
 
