@@ -41,6 +41,11 @@ class Utils {
             return numbersRegex.findAll(line).map { it.value.toLong() }.toList()
         }
 
+        val colorRegex = Regex("""[0-9a-f]+""")
+        fun colorStrInLineStr(line: String): String? {
+            return colorRegex.find(line)?.value
+        }
+
         fun <T> List<List<T>>.transpose(): List<List<T>> {
             return if (isNotEmpty() && all { it.size == this[0].size }) {
                 this[0].indices.map { i ->
