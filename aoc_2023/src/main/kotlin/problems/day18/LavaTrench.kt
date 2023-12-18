@@ -42,14 +42,14 @@ open class LavaTrench(lines: List<String>) {
 
         for (dig in enhancedDigData) {
             if (dig.digData.direction.isHorizontal()) {
-                var i = dig.i + 1
+                val i = dig.i + 1
 
                 val firstRange: IntRange = dig.toHorizontalRange()
 
                 val adjacentPosJ = dig.digData.direction.nextPos(dig.i, dig.j).second
 
 
-                val wallsToLeft = enhancedDigData.filter { it.isInRow(i) && it.j < adjacentPosJ }
+                val wallsToLeft = getWallsToLeft(enhancedDigData, i, adjacentPosJ)
 
                 // Out horizontal
                 if (wallsToLeft.size % 2 == 0) {
@@ -66,63 +66,85 @@ open class LavaTrench(lines: List<String>) {
         return total
     }
 
+    fun getWallsToLeft(
+        enhancedDigData: List<EnhancedDigData>,
+        i: Int,
+        j: Int
+    ): List<EnhancedDigData> {
+        val wallsLeft = enhancedDigData.filter { it.isInRow(i) && it.j < j }
+//        return wallsLeft
+        return wallsLeft.filter {
+            val endPos = it.endPos()
+            !wallsLeft.any { it.i == endPos.first && it.j == endPos.second }
+        }
+    }
+
     private fun totalRange(
         checkRange: IntRange,
-        i2: Int,
+        i: Int,
         enhancedDigData: List<EnhancedDigData>,
     ): Long {
-        var i = i2
         var total = 0L
+        val intersectDirs = enhancedDigData.filter { it.isInRow(i) }
         val fallRanges: MutableList<IntRange> = mutableListOf(checkRange)
-        while (fallRanges.isNotEmpty()) {
 
 
-            val intersectDirs = enhancedDigData.filter { it.isInRow(i) }
+        val nextI =
+            enhancedDigData.filter { it.digData.direction.isHorizontal() && it.i > i }.minOfOrNull { it.i } ?: return 0L
 
-
-            for (intersectDir in intersectDirs) {
-                val intersectRange = intersectDir.toHorizontalRange()
-                val overlappedRanges =
-                    fallRanges.filter {
-
-                        intersectRange.contains(it.first) || intersectRange.contains(it.last)
-
-                    }
-                for (overlapRange in overlappedRanges) {
-                    fallRanges.remove(overlapRange)
-
-                    // Left
-                    if (intersectRange.first > overlapRange.first) {
-                        fallRanges.add(overlapRange.first..intersectRange.first - 1)
-                    }
-
-                    // Right
-                    if (intersectRange.last < overlapRange.last) {
-                        fallRanges.add(intersectRange.last + 1..overlapRange.last)
-                    }
+        for (intersectDir in intersectDirs) {
+            val intersectRange = intersectDir.toHorizontalRange()
+            val overlappedRanges =
+                fallRanges.filter {
+                    (intersectRange.contains(it.first) || intersectRange.contains(it.last)) ||
+                            (intersectRange.first > it.first && intersectRange.last < it.last)
                 }
 
+            for (overlapRange in overlappedRanges) {
+                fallRanges.remove(overlapRange)
+                // Left
+                if (intersectRange.first > overlapRange.first) {
+                    val nextRange = overlapRange.first..intersectRange.first - 1
+                    fallRanges.add(nextRange)
+                }
+
+                // Right
+                if (intersectRange.last < overlapRange.last) {
+                    val nextRange = intersectRange.last + 1..overlapRange.last
+                    fallRanges.add(nextRange)
+                }
             }
-            val spacesInRow = fallRanges.fold(0) { acc, range ->
-                acc + range.last - range.first + 1
-            }
-
-
-            if (intersectDirs.size == 2 && intersectDirs.all { it.digData.direction.isVertical() }) {
-                val nextI =
-                    enhancedDigData.filter { it.digData.direction.isHorizontal() && it.i > i }.minOf { it.i }
-                total += spacesInRow * (nextI - i)
-                i = nextI
-
-            }
-
-
-            total += spacesInRow
-            i++
-
-
         }
+
+        total += fallRanges.sumOf {
+            totalRange(it, nextI, enhancedDigData)
+        }
+
+        val spacesInRow = fallRanges.fold(0L) { acc, range ->
+            acc + range.last - range.first + 1
+        }
+
+        total += spacesInRow * (nextI - i).toLong()
+
         return total
+    }
+
+    fun printInput() {
+        val enhancedData = enhancedDigData()
+        val minI = enhancedData.minOf { it.i }
+        val minJ = enhancedData.minOf { it.j }
+        val maxI = enhancedData.maxOf { it.i }
+        val maxJ = enhancedData.maxOf { it.j }
+
+        for (i in minI..maxI) {
+            val chars = mutableListOf<Char>()
+            for (j in minJ..maxJ) {
+                val exists = enhancedData.any { it.isInCell(i, j) }
+                val addChar = if (exists) '#' else '.'
+                chars.add(addChar)
+            }
+            println(chars.joinToString(""))
+        }
     }
 
 
@@ -143,5 +165,6 @@ open class LavaTrench(lines: List<String>) {
         }
         return returnData
     }
+
 
 }

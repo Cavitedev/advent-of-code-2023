@@ -5,7 +5,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import problems.utils.readInput
 
-class LavaTrenchTest {
+class
+LavaTrenchTest {
 
     lateinit var trench: LavaTrench
 
@@ -25,5 +26,11 @@ class LavaTrenchTest {
     @Test
     fun fillCellsAndCount() {
         assertEquals(62L, trench.filledCellsCount())
+    }
+
+
+    @Test
+    fun printInput() {
+        trench.printInput()
     }
 }

@@ -16,6 +16,35 @@ data class EnhancedDigData(val i: Int, val j: Int, val digData: DigData) {
         return range.contains(i)
     }
 
+    fun isInCol(j: Int): Boolean {
+        val range = toHorizontalRange()
+        return range.contains(j)
+//        if (digData.direction.isVertical()) {
+//            return j == this.j
+//        }
+//        // Vertical
+//        lateinit var range: IntRange
+//        if (digData.direction == EastTrenchDir.getInstance()) {
+//            range = this.j..this.j + digData.amount - 1
+//        } else {
+//            range = this.j - digData.amount + 1..this.j
+//        }
+//        return range.contains(j)
+    }
+
+    fun isInCell(i: Int, j: Int): Boolean {
+        return isInRow(i) && isInCol(j)
+    }
+
+    fun endPos(): Pair<Int, Int> {
+        val (i2, j2) = digData.direction.nextPos(i, j)
+        var di = i2 - i
+        var dj = j2 - j
+        di *= digData.amount
+        dj *= digData.amount
+        return Pair(i + di, j + dj)
+    }
+
     /**
      * Assumes the dig is on that row
      */
