@@ -1,4 +1,4 @@
-package problems.day19
+package problems.day19.part1
 
 class PartWorkflow(val workflowConditions: List<WorkflowStep>) {
 

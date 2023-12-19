@@ -1,4 +1,4 @@
-package problems.day19
+package problems.day19.part1
 
 data class Part(val x: Int, val m: Int, val a: Int, val s: Int) {
 

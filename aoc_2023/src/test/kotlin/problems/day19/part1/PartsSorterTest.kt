@@ -1,4 +1,4 @@
-package problems.day19
+package problems.day19.part1
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach

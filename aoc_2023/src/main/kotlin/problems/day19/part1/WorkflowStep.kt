@@ -1,4 +1,4 @@
-package problems.day19
+package problems.day19.part1
 
 open class WorkflowStep(val result: String) {
 
