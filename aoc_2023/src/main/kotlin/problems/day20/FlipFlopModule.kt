@@ -1,6 +1,6 @@
 package problems.day20
 
-class FlipFlopModule(result: List<String>) : Module(result) {
+class FlipFlopModule(result: List<String>, name: String) : Module(result, name) {
 
     var isOn: Boolean = false
 

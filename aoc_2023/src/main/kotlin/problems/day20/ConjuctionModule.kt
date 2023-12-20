@@ -1,6 +1,6 @@
 package problems.day20
 
-class ConjuctionModule(result: List<String>) : Module(result) {
+class ConjuctionModule(result: List<String>, name: String) : Module(result, name) {
 
     var dependantModules: MutableList<Module> = mutableListOf()
 

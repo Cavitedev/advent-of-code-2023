@@ -1,6 +1,6 @@
 package problems.day20
 
-abstract class Module(val resultMods: List<String>) {
+abstract class Module(val resultMods: List<String>, val name: String) {
 
     var lastSignal: Signal = Signal.LOW
 
