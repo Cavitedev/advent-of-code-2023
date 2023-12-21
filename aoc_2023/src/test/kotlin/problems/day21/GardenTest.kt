@@ -47,9 +47,12 @@ class GardenTest {
     fun countRepeatedMap() {
         garden.repeat(3)
         garden.search()
-//        assertEquals(16, garden.countPlotsOptimizedAtStep(6))
-//        assertEquals(50, garden.countPlotsOptimizedAtStep(10))
-//        assertEquals(1594, garden.countPlotsOptimizedAtStep(50))
+        assertEquals(16, garden.countPlotsOptimizedAtStep(6))
+        assertEquals(50, garden.countPlotsOptimizedAtStep(10))
+        // 1447 + 65  + 52 + 0 + 0 = 1594
+        assertEquals(1594, garden.countPlotsOptimizedAtStep(50))
+
+        //// 1986 + 154 + 946 + 648 + 2802 = 6536
         assertEquals(6536, garden.countPlotsOptimizedAtStep(100))
         assertEquals(167004, garden.countPlotsOptimizedAtStep(500))
         assertEquals(668697, garden.countPlotsOptimizedAtStep(1000))

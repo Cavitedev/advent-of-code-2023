@@ -45,9 +45,6 @@ class ExpandInDirection(var sequenceValues: MutableList<Int>, var start: Int, va
         if (difSteps < 0) return 0L
         var step = difSteps % startDif + startDif
         while (step < sequenceValues.size) {
-            if (difSteps < this.sequenceValues.size) {
-                total += sequenceValues[step.toInt()]
-            }
             step += startDif
         }
         var innerStep = difSteps - step
@@ -70,10 +67,18 @@ class ExpandInDirection(var sequenceValues: MutableList<Int>, var start: Int, va
         var step = difSteps % startDif
         var timesDif = (difSteps / startDif)
 
-        while (step < sequenceValues.size) {
-            total += sequenceValues[step.toInt()] * (timesDif + 2)
+        if (difSteps < startDif * inputSize / 2) {
+            timesDif -= 1
+        }
+
+        while (step < sequenceValues.size && timesDif > -2) {
+            if (difSteps < startDif * inputSize / 2) {
+                timesDif -= 2
+            } else {
+                timesDif--
+            }
+            total += sequenceValues[step.toInt()] * (timesDif + halfSize)
             step += startDif
-            timesDif--
         }
 
         return total
