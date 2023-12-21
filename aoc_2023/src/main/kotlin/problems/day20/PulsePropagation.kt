@@ -1,5 +1,7 @@
 package problems.day20
 
+import problems.utils.Utils
+
 class PulsePropagation(lines: List<String>) {
 
     val modules: Map<String, Module>
@@ -44,7 +46,7 @@ class PulsePropagation(lines: List<String>) {
     }
 
     fun pulseButton(n: Long): PulseResult {
-        val res = PulseResult(0L, 0L, modules)
+        val res = PulseResult(0L, 0L)
 
         for (i in 1..n) {
             val intermidiateRes = pulseButton()
@@ -55,7 +57,8 @@ class PulsePropagation(lines: List<String>) {
     }
 
     fun pulseButton(): PulseResult {
-        val res = PulseResult(0L, 0L, modules)
+        this.modules.forEach { it.value.sentSignalsRound.clear() }
+        val res = PulseResult(0L, 0L)
 
         // Button first
         val pendingProcesses = mutableListOf(PulseProccess(broadcasterName, Signal.LOW))
@@ -85,83 +88,32 @@ class PulsePropagation(lines: List<String>) {
     }
 
     fun countUntilRx(): Long {
-        val flipFlopsRequired = flipFlopPulseRequired()
+        var n = 0L
 
-        val rightModsLists: List<RepeatAmounts> = flipFlopsRequired.map { RepeatAmounts(mutableListOf()) }
-        val boolPatterns: List<MutableList<Boolean>> = flipFlopsRequired.map { mutableListOf() }
-
-        var n = 20000L
-
-        for (i in 1..<n) {
-            pulseButton()
-            val rightMods = flipFlopsRequired.map {
-                val mod = this.modules[it.name]!!
-                val isRight = mod.lastSignal == it.signal
-                isRight
-            }
-            rightMods.forEachIndexed { index, it ->
-                rightModsLists[index].add(it)
-                boolPatterns[index].add(it)
-            }
+        val rxBefore: ConjuctionModule = this.modules.values.find { it.resultMods.contains("rx") } as ConjuctionModule
+        val connectedRx = rxBefore.dependantModules
 
 
-//            res.addResult(intermidiateRes)
-        }
-//        println(rightModsLists.map {
-//            it.map {
-//                val res = if (it) "Y" else "N"
-//                res
-//            }
-//        }
-//        )
+        val repeatValues: MutableList<Long> = connectedRx.map { -1L }.toMutableList()
+        var remainingModsToCalc = connectedRx.size
 
-        val pulsePatterns = rightModsLists.map { resFlipFlops ->
-            resFlipFlops.toPattern()
-//            val firstFalse =
-//            val firstTrueAfterFalse = resFlipFlops.subList(firstFalse, resFlipFlops.size).indexOf(true) + firstFalse
-//            val firstFalseAfterTrue = resFlipFlops.subList(firstTrueAfterFalse, resFlipFlops.size).indexOf(false) + firstTrueAfterFalse
-//            PulsePattern(firstTrueAfterFalse, firstFalseAfterTrue - firstTrueAfterFalse)
-        }
-
-        val reducedPulsePatterns = pulsePatterns.toSet()
-
-        val reducedPattern = reducedPulsePatterns.sortedBy { it.size }.reduce { a, b ->
-            a.combine(b)
-        }
-
-        while (true) {
-            var allTrue = reducedPulsePatterns.map { it.isValid(n) }
+        while (remainingModsToCalc > 0) {
             n++
-            if (allTrue.all { it }) {
-                break
+            pulseButton()
+            connectedRx.forEachIndexed { index, module ->
+                val isRight = module.sentSignalsRound.contains(Signal.HIGH)
+                if (isRight) {
+                    val prevRepeatValue = repeatValues[index]
+                    if (prevRepeatValue == -1L) {
+                        repeatValues[index] = n
+                        remainingModsToCalc--
+                    }
+                }
             }
         }
 
-        return 0L
-    }
-
-    fun flipFlopPulseRequired(): List<PulseProccess> {
-
-        val rxResult = this.modules.values.find { it.resultMods.contains("rx") }!!
-
-        return flipFlopsFromResult(rxResult, Signal.LOW)
-
-    }
-
-    fun flipFlopsFromResult(module: Module, signalRequired: Signal): List<PulseProccess> {
-        if (module is FlipFlopModule) {
-            return listOf(PulseProccess(module.name, signalRequired))
-        } else if (module is ConjuctionModule) {
-            val dependencies = module.dependantModules
-            val invSignal = when (signalRequired) {
-                Signal.HIGH -> Signal.LOW
-                Signal.LOW -> Signal.HIGH
-            }
-            val dep = dependencies.map { flipFlopsFromResult(it, invSignal) }.flatten()
-            return dep
-        }
-
-        throw Exception("Unreachable")
+        // listOf(3767, 3779, 4057, 3889)
+        return Utils.calculateLCM(repeatValues)
     }
 
 

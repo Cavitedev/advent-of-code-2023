@@ -18,9 +18,7 @@ class Day20Test {
     fun part2() {
         val pulsePropagation = PulsePropagation(readInput("day20/input"))
 
-        // Greater than 1216511
-        // Less than 1898108167307379 probably
-        Assertions.assertEquals(808146535L, pulsePropagation.countUntilRx())
+        Assertions.assertEquals(224602953547789L, pulsePropagation.countUntilRx())
     }
 
 
