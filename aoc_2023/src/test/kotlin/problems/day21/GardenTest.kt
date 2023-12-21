@@ -27,4 +27,35 @@ class GardenTest {
         garden.search()
         assertEquals(16, garden.countPlotsAtStep(6))
     }
+
+
+    @Test
+    fun countBySections() {
+        garden.repeat(10)
+        garden.search()
+        for (n in 0..100L) {
+            val total = garden.countPlotsAtStep(n)
+            println("n=$n, total= $total")
+            println(garden.countBySections(n).map { it.map { num -> String.format("%${2}d", num) } }.joinToString("\n"))
+        }
+//        val n = 31L
+
+    }
+
+
+    @Test
+    fun countRepeatedMap() {
+        garden.repeat(3)
+        garden.search()
+//        assertEquals(16, garden.countPlotsOptimizedAtStep(6))
+//        assertEquals(50, garden.countPlotsOptimizedAtStep(10))
+//        assertEquals(1594, garden.countPlotsOptimizedAtStep(50))
+        assertEquals(6536, garden.countPlotsOptimizedAtStep(100))
+        assertEquals(167004, garden.countPlotsOptimizedAtStep(500))
+        assertEquals(668697, garden.countPlotsOptimizedAtStep(1000))
+        assertEquals(16733044, garden.countPlotsOptimizedAtStep(5000))
+
+    }
+
+
 }

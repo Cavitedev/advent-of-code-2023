@@ -3,22 +3,25 @@ package problems.day21
 abstract class GardenDirection {
 
     companion object {
-        fun allDirs(): List<GardenDirection> = listOf(
+        fun allCartesianDirs(): List<GardenDirection> = listOf(
             NorthGardenDir.getInstance(),
             EastGardenDir.getInstance(),
             SouthGardenDir.getInstance(),
             WestGardenDir.getInstance()
         )
+
+        fun allRomboDirs(): List<GardenDirection> = listOf(
+            NorthWestGardenDir.getInstance(),
+            NorthEastGardenDir.getInstance(),
+            SouthWestGardenDir.getInstance(),
+            SouthEastGardenDir.getInstance()
+        )
     }
 
-    abstract fun isHorizontal(): Boolean
-    abstract fun isVertical(): Boolean
-    abstract fun inverse(): GardenDirection
-
-    abstract fun gardenType(): Char
 
     abstract fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>?
 
+    abstract fun <T> edgeElements(grid: List<List<T>>): Pair<T, T>
 
 }
 
@@ -35,25 +38,16 @@ class WestGardenDir : GardenDirection() {
         }
     }
 
-    override fun isHorizontal(): Boolean {
-        return true
-    }
-
-    override fun isVertical(): Boolean {
-        return false
-    }
-
-    override fun inverse(): GardenDirection {
-        return EastGardenDir.getInstance()
-    }
-
-    override fun gardenType(): Char {
-        return 'W'
-    }
 
     override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
         if (j == 0) return null
         return Pair(i, j - 1)
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val middle = grid.size / 2
+
+        return Pair(grid[middle][0], grid[middle][1])
     }
 
     override fun hashCode(): Int {
@@ -81,25 +75,16 @@ class NorthGardenDir : GardenDirection() {
         }
     }
 
-    override fun isHorizontal(): Boolean {
-        return false
-    }
-
-    override fun isVertical(): Boolean {
-        return true
-    }
-
-    override fun inverse(): GardenDirection {
-        return SouthGardenDir.getInstance()
-    }
-
-    override fun gardenType(): Char {
-        return 'N'
-    }
 
     override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
         if (i == 0) return null
         return Pair(i - 1, j)
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val middle = grid[0].size / 2
+
+        return Pair(grid[0][middle], grid[1][middle])
     }
 
     override fun hashCode(): Int {
@@ -129,25 +114,17 @@ class EastGardenDir : GardenDirection() {
 
     }
 
-    override fun isHorizontal(): Boolean {
-        return true
-    }
-
-    override fun isVertical(): Boolean {
-        return false
-    }
-
-    override fun inverse(): GardenDirection {
-        return WestGardenDir.getInstance()
-    }
-
-    override fun gardenType(): Char {
-        return 'E'
-    }
 
     override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
         if (j == grid[0].size - 1) return null
         return Pair(i, j + 1)
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val middle = grid[0].size / 2
+        val last = grid.size - 1
+
+        return Pair(grid[last][middle], grid[last - 1][middle])
     }
 
     override fun hashCode(): Int {
@@ -174,25 +151,16 @@ class SouthGardenDir : GardenDirection() {
         }
     }
 
-    override fun isHorizontal(): Boolean {
-        return false
-    }
-
-    override fun isVertical(): Boolean {
-        return true
-    }
-
-    override fun inverse(): GardenDirection {
-        return NorthGardenDir.getInstance()
-    }
-
-    override fun gardenType(): Char {
-        return 'S'
-    }
 
     override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
         if (i == grid.size - 1) return null
         return Pair(i + 1, j)
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val middle = grid.size / 2
+        val last = grid.size - 1
+        return Pair(grid[middle][last], grid[middle][last - 1])
     }
 
     override fun hashCode(): Int {
@@ -203,6 +171,104 @@ class SouthGardenDir : GardenDirection() {
         if (this === other) return true
         if (other !is SouthGardenDir) return false
         return true
+    }
+
+}
+
+
+class NorthWestGardenDir : GardenDirection() {
+
+    companion object {
+        private var instance: GardenDirection? = null
+
+        fun getInstance(): GardenDirection {
+            if (instance == null) {
+                instance = NorthWestGardenDir()
+            }
+            return instance!!
+        }
+    }
+
+    override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        return Pair(grid[0][0], grid[1][0])
+    }
+
+}
+
+class NorthEastGardenDir : GardenDirection() {
+
+    companion object {
+        private var instance: GardenDirection? = null
+
+        fun getInstance(): GardenDirection {
+            if (instance == null) {
+                instance = NorthEastGardenDir()
+            }
+            return instance!!
+        }
+    }
+
+    override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val lastCol = grid[0].size - 1
+        return Pair(grid[0][lastCol], grid[1][lastCol])
+    }
+
+}
+
+class SouthWestGardenDir : GardenDirection() {
+
+    companion object {
+        private var instance: GardenDirection? = null
+
+        fun getInstance(): GardenDirection {
+            if (instance == null) {
+                instance = SouthWestGardenDir()
+            }
+            return instance!!
+        }
+    }
+
+    override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val lastRow = grid.size - 1
+        return Pair(grid[lastRow][0], grid[lastRow - 1][0])
+    }
+
+}
+
+
+class SouthEastGardenDir : GardenDirection() {
+
+    companion object {
+        private var instance: GardenDirection? = null
+
+        fun getInstance(): GardenDirection {
+            if (instance == null) {
+                instance = SouthEastGardenDir()
+            }
+            return instance!!
+        }
+    }
+
+    override fun nextPos(i: Int, j: Int, grid: List<List<Any>>): Pair<Int, Int>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun <T> edgeElements(grid: List<List<T>>): Pair<T, T> {
+        val lastCol = grid[0].size - 1
+        val lastRow = grid.size - 1
+        return Pair(grid[lastRow][lastCol], grid[lastRow - 1][lastCol])
     }
 
 }
