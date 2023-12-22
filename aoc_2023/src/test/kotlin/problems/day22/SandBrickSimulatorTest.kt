@@ -36,5 +36,10 @@ class SandBrickSimulatorTest {
         assertEquals(5, sandBrickSimulator.countBricksCanBeDisintegrated())
     }
 
+    @Test
+    fun sumFallIfDisintegrate() {
+        sandBrickSimulator.fallBricks()
+        assertEquals(7, sandBrickSimulator.sumFallIfDisintegrate())
+    }
 
 }

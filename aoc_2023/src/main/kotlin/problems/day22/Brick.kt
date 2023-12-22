@@ -13,6 +13,27 @@ class Brick(val startCord: Coordinate, val endCoordinate: Coordinate) {
         return aboveBricks.all { it.downBricks.size >= 2 }
     }
 
+    fun amountThatWouldFallIfDisintegrate(): Int {
+        if (canBeDisintegrated()) return 0
+
+        val disintegrateBricks = mutableSetOf<Brick>()
+        val openedBricks = mutableListOf(this)
+        while (openedBricks.isNotEmpty()) {
+            val nextBrick = openedBricks.removeAt(0)
+            if (disintegrateBricks.contains(nextBrick)) continue
+            disintegrateBricks.add(nextBrick)
+
+            for (aboveBrick in nextBrick.aboveBricks) {
+                val newDownBricks = aboveBrick.downBricks - disintegrateBricks
+                if (newDownBricks.isEmpty()) {
+                    openedBricks.add(aboveBrick)
+                }
+            }
+        }
+
+        return disintegrateBricks.size - 1
+    }
+
     fun isVertical(): Boolean = startCord.x == endCoordinate.x && startCord.y == endCoordinate.y
 
     fun positions(): List<Coordinate> {

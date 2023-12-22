@@ -11,9 +11,14 @@ class Day22Test {
     fun part1() {
         val sandBrickSimulator = SandBrickSimulator(readInput("day22/input"))
         sandBrickSimulator.fallBricks()
-
-        // 454 too high but close
         Assertions.assertEquals(395, sandBrickSimulator.countBricksCanBeDisintegrated())
+    }
+
+    @Test
+    fun part2() {
+        val sandBrickSimulator = SandBrickSimulator(readInput("day22/input"))
+        sandBrickSimulator.fallBricks()
+        Assertions.assertEquals(64714, sandBrickSimulator.sumFallIfDisintegrate())
     }
 
 

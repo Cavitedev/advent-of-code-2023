@@ -73,4 +73,8 @@ class SandBrickSimulator(lines: List<String>) {
 
     }
 
+    fun sumFallIfDisintegrate(): Int {
+        return this.bricks.sumOf { it.amountThatWouldFallIfDisintegrate() }
+    }
+
 }
