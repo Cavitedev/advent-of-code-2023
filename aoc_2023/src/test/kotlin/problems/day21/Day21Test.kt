@@ -15,7 +15,7 @@ class Day21Test {
 
 
     @Test
-    fun countBySections() {
+    fun part2() {
         val garden = Garden(readInput("day21/input"))
         garden.repeat(3)
         garden.search()
