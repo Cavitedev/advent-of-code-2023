@@ -17,6 +17,7 @@ class HikingSol(val hikingMap: HikingMap) {
             val nextNode = openedNodes.removeLast()
             if (nextNode.cell == endCell) {
                 longestPath = max(longestPath, nextNode.gCost)
+                println("longest: $longestPath nodes ${openedNodes.size}")
                 nextNode.removeUntilNode(openedNodes.lastOrNull()?.previousNode)
                 continue
             }
