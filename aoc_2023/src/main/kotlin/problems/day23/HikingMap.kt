@@ -45,4 +45,10 @@ class HikingMap(lines: List<String>) {
         return sol.solve()
     }
 
+    fun removeSlopes() {
+        this.map.flatten().forEach { cell ->
+            cell.dir = null
+        }
+    }
+
 }

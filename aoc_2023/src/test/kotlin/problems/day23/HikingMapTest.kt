@@ -24,4 +24,11 @@ class HikingMapTest {
     fun longestPath() {
         assertEquals(94, hikingMap.longestPath())
     }
+
+
+    @Test
+    fun longestPathNoSlopes() {
+        hikingMap.removeSlopes()
+        assertEquals(154, hikingMap.longestPath())
+    }
 }

@@ -9,23 +9,33 @@ class HikingSol(val hikingMap: HikingMap) {
     fun solve(): Int {
         var longestPath = 0
 
-        val startNode = HikingNode(startCell, 0, null)
+        val startNode = HikingNode(startCell, 0, null, mutableSetOf())
 
         val openedNodes = mutableListOf(startNode)
 
         while (openedNodes.isNotEmpty()) {
             val nextNode = openedNodes.removeLast()
-            if (!nextNode.cell.canWalk) continue
-            if (nextNode.hasVisitedCell()) continue
             if (nextNode.cell == endCell) {
                 longestPath = max(longestPath, nextNode.gCost)
+                nextNode.removeUntilNode(openedNodes.lastOrNull()?.previousNode)
+                continue
             }
+            nextNode.prevCells.add(nextNode.cell)
 
-            val neighbours = findNeighbours(nextNode)
+            val neighbours = findNeighbours(nextNode).filter { neighbour ->
+                neighbour.cell.canWalk && !neighbour.hasVisitedCell()
+            }
 
             for (neighbour in neighbours) {
                 openedNodes.add(neighbour)
             }
+
+            if (neighbours.isEmpty()) {
+                if (openedNodes.isEmpty()) break
+
+                nextNode.removeUntilNode(openedNodes.lastOrNull()?.previousNode)
+            }
+
 
         }
 

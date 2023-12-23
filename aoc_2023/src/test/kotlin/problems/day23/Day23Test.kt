@@ -14,4 +14,12 @@ class Day23Test {
     }
 
 
+    @Test
+    fun part2() {
+        val hikingMap = HikingMap(readInput("day23/input"))
+        hikingMap.removeSlopes()
+        Assertions.assertEquals(2202, hikingMap.longestPath())
+    }
+
+
 }
