@@ -16,5 +16,14 @@ class Day24Test {
         )
     }
 
+    @Test
+    fun part2() {
+        val hail = HailSimulator(readInput("day24/input"))
+        Assertions.assertEquals(
+            24627,
+            hail.rockThrown().pos.total()
+        )
+    }
+
 
 }

@@ -6,7 +6,7 @@ class Hailstone(val pos: HailCoordinate, val vel: HailCoordinate) {
         return "$pos @ $vel"
     }
 
-    fun intersection2D(other: Hailstone): HailCoordinate? {
+    fun intersectionXY(other: Hailstone): HailCoordinate? {
         if ((this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal()) {
             return null
         }
@@ -33,15 +33,44 @@ class Hailstone(val pos: HailCoordinate, val vel: HailCoordinate) {
 
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is Hailstone) return false
+    fun planeParalelLines(other: Hailstone): HailPlane? {
+        if ((this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal() &&
+            (this.vel.x / other.vel.x - this.vel.z / other.vel.z).abs() < 0.0001.toBigDecimal()
+        ) {
+            // Paralel
+            val p = this.pos
+            val m1 = this.vel
+            val m2 = this.pos.subtract(other.pos)
 
-        if (pos != other.pos) return false
-        if (vel != other.vel) return false
+            val a = m1.y * m2.z - m1.z * m2.y
+            val b = m1.z * m2.x - m1.x * m2.z
+            val c = m1.x * m2.y - m1.y * m2.x
+            val d = a * -p.x + b * -p.y + c * -p.z
+            return HailPlane(a, b, c, d)
 
-        return true
+        }
+        return null
     }
+
+    fun toPlanes(): List<HailPlane> {
+
+        val plane1 = HailPlane(
+            this.vel.y,
+            -this.vel.x,
+            0.toBigDecimal(),
+            -this.pos.x * this.vel.y - (-this.pos.y) * this.vel.x
+        )
+
+        val plane2 = HailPlane(
+            this.vel.z,
+            0.toBigDecimal(),
+            -this.vel.x,
+            -this.pos.x * this.vel.z - (-this.pos.z) * this.vel.x
+        )
+
+        return listOf(plane1, plane2)
+    }
+
 
     override fun hashCode(): Int {
         var result = pos.hashCode()

@@ -31,7 +31,7 @@ class HailstoneTest {
             0.toBigDecimal(mathContext)
         )
 
-        assertEquals(expectedIntersection, a.intersection2D(b))
+        assertEquals(expectedIntersection, a.intersectionXY(b))
     }
 
     @Test
@@ -57,7 +57,7 @@ class HailstoneTest {
             0.toBigDecimal(mathContext)
         )
 
-        assertEquals(expectedIntersection, a.intersection2D(b))
+        assertEquals(expectedIntersection, a.intersectionXY(b))
     }
 
     @Test
@@ -77,6 +77,64 @@ class HailstoneTest {
             ), HailCoordinate(-2.toBigDecimal(mathContext), -2.toBigDecimal(mathContext), -4.toBigDecimal(mathContext))
         )
 
-        assertEquals(null, a.intersection2D(b))
+        assertEquals(null, a.intersectionXY(b))
+    }
+
+    @Test
+    fun planeParalelLines() {
+        val a = Hailstone(
+            HailCoordinate(
+                18.toBigDecimal(mathContext),
+                19.toBigDecimal(mathContext),
+                22.toBigDecimal(mathContext)
+            ), HailCoordinate(-1.toBigDecimal(mathContext), -1.toBigDecimal(mathContext), -2.toBigDecimal(mathContext))
+        )
+        val b = Hailstone(
+            HailCoordinate(
+                20.toBigDecimal(mathContext),
+                25.toBigDecimal(mathContext),
+                34.toBigDecimal(mathContext)
+            ), HailCoordinate(
+                (-2).toBigDecimal(mathContext), (-2).toBigDecimal(mathContext),
+                (-4).toBigDecimal(mathContext)
+            )
+        )
+
+        val plane = HailPlane(
+            0.toBigDecimal(mathContext),
+            (-8).toBigDecimal(mathContext),
+            4.toBigDecimal(mathContext),
+            64.toBigDecimal(mathContext)
+        )
+
+        assertEquals(plane, a.planeParalelLines(b))
+    }
+
+    @Test
+    fun toPlanes() {
+
+        val hailstone = Hailstone(
+            HailCoordinate(
+                19.toBigDecimal(mathContext),
+                13.toBigDecimal(mathContext),
+                30.toBigDecimal(mathContext)
+            ), HailCoordinate(-2.toBigDecimal(mathContext), 1.toBigDecimal(mathContext), -2.toBigDecimal(mathContext))
+        )
+
+        val plane1 = HailPlane(
+            1.toBigDecimal(mathContext),
+            2.toBigDecimal(mathContext),
+            0.toBigDecimal(mathContext),
+            -45.toBigDecimal(mathContext)
+        )
+        val plane2 = HailPlane(
+            -2.toBigDecimal(mathContext),
+            0.toBigDecimal(mathContext),
+            2.toBigDecimal(mathContext),
+            -22.toBigDecimal(mathContext)
+        )
+
+        assertEquals(listOf(plane1, plane2), hailstone.toPlanes())
+
     }
 }

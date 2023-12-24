@@ -24,12 +24,32 @@ class HailSimulatorTest {
     }
 
     @Test
-    fun intersections() {
-        assertEquals(5, hailSimulator.intersections().size)
+    fun intersectionsXY() {
+        assertEquals(5, hailSimulator.intersectionsXY().size)
     }
 
     @Test
     fun intersectionsInArea() {
         assertEquals(2, hailSimulator.intersectionsIn2DArea(7.toBigDecimal(), 27.toBigDecimal()).size)
     }
+
+
+    @Test
+    fun firstPlane() {
+        val plane = HailPlane(
+            0.toBigDecimal(),
+            (-8).toBigDecimal(),
+            4.toBigDecimal(),
+            64.toBigDecimal()
+        )
+
+        assertEquals(plane, hailSimulator.firstPlane())
+    }
+
+    @Test
+    fun rockThrowPos() {
+        val expected = HailCoordinate(24.toBigDecimal(), 13.toBigDecimal(), 10.toBigDecimal())
+        assertEquals(expected, hailSimulator.rockThrown().pos)
+    }
+
 }

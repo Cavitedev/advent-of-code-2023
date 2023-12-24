@@ -20,6 +20,22 @@ class HailCoordinate(var x: BigDecimal, var y: BigDecimal, var z: BigDecimal) {
         return HailCoordinate(roundedX, roundedY, roundedZ)
     }
 
+    fun subtract(other: HailCoordinate): HailCoordinate {
+        return HailCoordinate(this.x - other.x, this.y - other.y, this.z - other.z)
+    }
+
+    fun multiply(value: BigDecimal): HailCoordinate {
+        return HailCoordinate(this.x * value, this.y * value, this.z * value)
+    }
+
+    fun total(): BigDecimal {
+        return x + y + z
+    }
+
+    fun divide(other: HailCoordinate): HailCoordinate {
+        return HailCoordinate(this.x / other.x, this.y / other.y, this.z / other.z)
+    }
+
     override fun toString(): String {
         return "$x,$y,$z"
     }
