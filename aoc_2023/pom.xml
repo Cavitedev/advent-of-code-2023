@@ -22,6 +22,7 @@
             <id>mavenCentral</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
+
     </repositories>
 
     <build>
@@ -64,11 +65,21 @@
                     <source>16</source>
                     <target>16</target>
                 </configuration>
+
+
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.z3/libz3.linux -->
+        <dependency>
+            <groupId>tools.aqua</groupId>
+            <artifactId>z3-turnkey</artifactId>
+            <version>4.12.2.1</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>

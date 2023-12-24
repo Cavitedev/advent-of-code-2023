@@ -7,7 +7,7 @@ class Hailstone(val pos: HailCoordinate, val vel: HailCoordinate) {
     }
 
     fun intersectionXY(other: Hailstone): HailCoordinate? {
-        if ((this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal()) {
+        if (other.vel.x.toDouble() == 0.0 || other.vel.y.toDouble() == 0.0 || (this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal()) {
             return null
         }
 
@@ -33,7 +33,47 @@ class Hailstone(val pos: HailCoordinate, val vel: HailCoordinate) {
 
     }
 
+    fun intersectionXZ(other: Hailstone): HailCoordinate? {
+        if (other.vel.x.toDouble() == 0.0 || other.vel.z.toDouble() == 0.0 || (this.vel.x / other.vel.x - this.vel.z / other.vel.z).abs() < 0.0001.toBigDecimal()) {
+            return null
+        }
+
+
+        val m1 = this.vel.z - other.vel.z * (this.vel.x / other.vel.x)
+        val value = other.pos.z - this.pos.z + other.vel.z * ((other.pos.x - this.pos.x) / -other.vel.x)
+
+
+        val actualM1 = value / m1
+        if (actualM1 < 0.toBigDecimal()) {
+            return null
+        }
+        val actualM2 = (this.pos.x - other.pos.x + this.vel.x * actualM1) / other.vel.x
+        if (actualM2 < 0.toBigDecimal()) {
+            return null
+        }
+
+        val x = this.pos.x + this.vel.x * actualM1
+        val z = this.pos.z + this.vel.z * actualM1
+
+
+        return HailCoordinate(x, 0.toBigDecimal(), z)
+
+    }
+
+    fun intersectionXYZ(other: Hailstone): HailCoordinate? {
+        val intXY = intersectionXY(other) ?: return null
+        val intXZ = intersectionXZ(other) ?: return null
+
+        if (intXY.x == intXZ.x)
+            return HailCoordinate(intXY.x, intXY.y, intXZ.z)
+        return null
+    }
+
     fun planeParalelLines(other: Hailstone): HailPlane? {
+        if ((this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal()) {
+            print("parallel x and y")
+        }
+
         if ((this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal() &&
             (this.vel.x / other.vel.x - this.vel.z / other.vel.z).abs() < 0.0001.toBigDecimal()
         ) {
@@ -50,6 +90,23 @@ class Hailstone(val pos: HailCoordinate, val vel: HailCoordinate) {
 
         }
         return null
+    }
+
+    fun relativePosition(other: Hailstone): Int {
+
+        if ((this.vel.x / other.vel.x - this.vel.y / other.vel.y).abs() < 0.0001.toBigDecimal() &&
+            (this.vel.x / other.vel.x - this.vel.z / other.vel.z).abs() < 0.0001.toBigDecimal()
+        ) {
+            // paralel or overlapped
+            return 0
+        }
+        val intersection = intersectionXYZ(other)
+        if (intersection != null) {
+            return 1
+        }
+        return 2
+
+
     }
 
     fun toPlanes(): List<HailPlane> {

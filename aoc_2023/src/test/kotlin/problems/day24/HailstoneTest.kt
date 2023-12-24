@@ -137,4 +137,30 @@ class HailstoneTest {
         assertEquals(listOf(plane1, plane2), hailstone.toPlanes())
 
     }
+
+    @Test
+    fun intersectionXYZ() {
+
+        val hailstone1 = Hailstone(
+            HailCoordinate(
+                19.toBigDecimal(mathContext),
+                13.toBigDecimal(mathContext),
+                30.toBigDecimal(mathContext)
+            ), HailCoordinate(1.toBigDecimal(mathContext), 0.toBigDecimal(mathContext), -4.toBigDecimal(mathContext))
+        )
+
+        val hailstone2 = Hailstone(
+            HailCoordinate(
+                18.toBigDecimal(mathContext),
+                19.toBigDecimal(mathContext),
+                22.toBigDecimal(mathContext)
+            ), HailCoordinate(2.toBigDecimal(mathContext), -2.toBigDecimal(mathContext), -4.toBigDecimal(mathContext))
+        )
+
+        val intersection =
+            HailCoordinate(24.toBigDecimal(mathContext), 13.toBigDecimal(mathContext), 10.toBigDecimal(mathContext))
+
+        assertEquals(intersection, hailstone1.intersectionXYZ(hailstone2))
+
+    }
 }

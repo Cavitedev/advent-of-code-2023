@@ -46,10 +46,21 @@ class HailSimulatorTest {
         assertEquals(plane, hailSimulator.firstPlane())
     }
 
-    @Test
-    fun rockThrowPos() {
-        val expected = HailCoordinate(24.toBigDecimal(), 13.toBigDecimal(), 10.toBigDecimal())
-        assertEquals(expected, hailSimulator.rockThrown().pos)
-    }
+//    @Test
+//    fun rockThrowPos() {
+//        val expected = HailCoordinate(24.toBigDecimal(), 13.toBigDecimal(), 10.toBigDecimal())
+//        assertEquals(expected, hailSimulator.rockThrown().pos)
+//    }
 
+//    @Test
+//    fun rockThrownBruteForcing() {
+//        val expected = HailCoordinate(24.toBigDecimal(), 13.toBigDecimal(), 10.toBigDecimal())
+//        assertEquals(expected, hailSimulator.rockThrownBruteForcing()!!.pos)
+//    }
+
+    @Test
+    fun rockThroughEquations() {
+        val result = hailSimulator.resolveEquations()
+        assertEquals(47, result!!.pos.total().toInt())
+    }
 }
