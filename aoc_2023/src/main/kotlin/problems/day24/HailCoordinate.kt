@@ -1,7 +1,24 @@
 package problems.day24
 
-class HailCoordinate(val x: Long, val y: Long, val z: Long) {
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 
+class HailCoordinate(var x: BigDecimal, var y: BigDecimal, var z: BigDecimal) {
+
+    init {
+        val scale = 5
+        x = x.setScale(scale, RoundingMode.HALF_UP)
+        y = y.setScale(scale, RoundingMode.HALF_UP)
+        z = z.setScale(scale, RoundingMode.HALF_UP)
+    }
+
+    fun roundedCoordinate(): HailCoordinate {
+        val roundedX = (x.multiply(1000.toBigDecimal())).round(MathContext(128)) / 1000.0.toBigDecimal()
+        val roundedY = (y.multiply(1000.toBigDecimal())).round(MathContext(128)) / 1000.0.toBigDecimal()
+        val roundedZ = (z.multiply(1000.toBigDecimal())).round(MathContext(128)) / 1000.0.toBigDecimal()
+        return HailCoordinate(roundedX, roundedY, roundedZ)
+    }
 
     override fun toString(): String {
         return "$x,$y,$z"

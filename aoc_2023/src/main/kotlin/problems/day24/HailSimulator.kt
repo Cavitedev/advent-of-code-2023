@@ -1,11 +1,14 @@
 package problems.day24
 
+import java.math.BigDecimal
+import java.math.MathContext
+
 class HailSimulator(lines: List<String>) {
 
     val hailstones = lines.map { line ->
         val (cord, mov) = line.split("@").map {
             val splits = it.split(",").map { splittedCoord ->
-                splittedCoord.trim().toLong()
+                splittedCoord.trim().toBigDecimal(MathContext(20))
             }
             HailCoordinate(splits[0], splits[1], splits[2])
         }
@@ -26,7 +29,7 @@ class HailSimulator(lines: List<String>) {
 
     }
 
-    fun intersectionsIn2DArea(min: Long, max: Long): List<HailCoordinate> {
+    fun intersectionsIn2DArea(min: BigDecimal, max: BigDecimal): List<HailCoordinate> {
         return intersections().filter {
             it.x >= min && it.x <= max &&
                     it.y >= min && it.y <= max
