@@ -10,9 +10,8 @@ class Day25Test {
     @Test
     fun part1() {
         val snowMachine = SnowMachine(readInput("day25/input"))
-        // 507644 Too high
         Assertions.assertEquals(
-            24627,
+            507626,
             snowMachine.groupDividerProduct()
         )
     }

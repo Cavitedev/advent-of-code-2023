@@ -30,6 +30,52 @@ class Garden(lines: List<String>) {
         }
     }
 
+    fun countPlotsOptimizedAtStep(steps: Long): Long {
+
+        val inputInSections = inputInSections()
+
+        val middleSection = inputInSections[inputInSections.size / 2][inputInSections[0].size / 2]
+        val maxValues =
+            listOf(countPlotsAtStep(middleSection, 1000000L), countPlotsAtStep(middleSection, 1000001L)).sorted()
+        val valLarge = maxValues[1]
+        val secondLarge = maxValues[0]
+
+        val edges = GardenDirection.allCartesianDirs().map { dir ->
+            dir.edgeElements(inputInSections)
+        }
+        val edgesExpansions = edges.map {
+            val last = it.first
+            val secondLast = it.second
+            ExpandInDirection.fromLastCellsGroups(last, secondLast, valLarge)
+        }
+        val edgeAmounts = edgesExpansions.sumOf { it.edgeTotalAmount(steps) }
+
+        val corners = GardenDirection.allRomboDirs().map { dir ->
+            dir.edgeElements(inputInSections)
+        }
+        val cornerExpansions = corners.map {
+            val last = it.first
+            val secondLast = it.second
+            ExpandInDirection.fromLastCellsGroups(last, secondLast, valLarge)
+        }
+        val cornersAmounts = cornerExpansions.sumOf { it.cornerTotalAmount(steps, inputInSections.size) }
+
+
+        // Inner cells
+        // start dif is always the same in this problem
+//        val startDif = cornerExpansions.first().startDif
+        val innerEdgeAmounts = edgesExpansions.sumOf { it.innerEdgesTotalAmount(steps, valLarge, secondLarge) }
+        val innerCornersAmounts =
+            cornerExpansions.sumOf { it.innerCornersTotalAmount(steps, valLarge, secondLarge, inputInSections.size) }
+
+        val currentCells = countPlotsAtStep(cells, steps)
+
+
+
+// 1986 + 154 + 946 + 648 + 2802
+        return currentCells + edgeAmounts + cornersAmounts + innerEdgeAmounts + innerCornersAmounts
+    }
+
     fun countPlotsAtStep(step: Long): Int {
         return countPlotsAtStep(cells, step)
     }

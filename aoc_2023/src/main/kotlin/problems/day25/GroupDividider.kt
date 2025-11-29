@@ -11,39 +11,48 @@ class GroupDividider(val snowMachine: SnowMachine, val disconnectWires: Int) {
         val visitedPairs = mutableSetOf<ComponentPair>()
         val visitedComponents = mutableSetOf<Component>()
 
+        val refComponent = snowMachine.components.values.first()
+//        val openedComponents = mutableListOf(refComponent)
+        group1.add(refComponent)
 
-        val openedComponents = mutableListOf(snowMachine.components.values.first())
-        group1.add(snowMachine.components.values.first())
-
-        while (openedComponents.isNotEmpty()) {
-            val component = openedComponents.removeLast()
-            if (visitedComponents.contains(component)) continue
-            visitedComponents.add(component)
-
-
-            for (connectedComponent in component.otherComponents) {
-                if (group1.contains(connectedComponent) || group2.contains(connectedComponent)) continue
-
-                val pair = ComponentPair(component, connectedComponent)
-                if (visitedPairs.contains(pair)) continue
-                visitedPairs.add(pair)
-                val visitedCount = djistraIndirectReturn(connectedComponent, component)
-                if (visitedCount > disconnectWires) {
-                    group1.add(connectedComponent)
-                    openedComponents.add(connectedComponent)
-                } else {
-                    group2.add(connectedComponent)
-                }
+        for(connectedComponent in snowMachine.components.values.drop(1)){
+            if (group1.contains(connectedComponent) || group2.contains(connectedComponent)) continue
+            val visitedCount = djistraIndirectReturn(connectedComponent, refComponent).size
+            if (visitedCount > disconnectWires) {
+                group1.add(connectedComponent)
+            } else {
+                group2.add(connectedComponent)
             }
         }
+
+//        while (openedComponents.isNotEmpty()) {
+//            val component = openedComponents.removeLast()
+//            if (visitedComponents.contains(component)) continue
+//            visitedComponents.add(component)
+//
+//
+//            for (connectedComponent in component.otherComponents) {
+//                if (group1.contains(connectedComponent) || group2.contains(connectedComponent)) continue
+//
+//                val pair = ComponentPair(component, connectedComponent)
+//                if (visitedPairs.contains(pair)) continue
+//                visitedPairs.add(pair)
+//                val visitedCount = djistraIndirectReturn(connectedComponent, component)
+//                if (visitedCount > disconnectWires) {
+//                    group1.add(connectedComponent)
+//                    openedComponents.add(connectedComponent)
+//                } else {
+//                    group2.add(connectedComponent)
+//                }
+//            }
+//        }
 
         val group2ByDifference = this.snowMachine.components.values - group1
         return listOf(group1, group2ByDifference.toSet())
     }
 
-    fun djistraIndirectReturn(from: Component, to: Component): Int {
+    fun djistraIndirectReturn(from: Component, to: Component): List<ComponentNode> {
 
-        var count = 0
 //        val visitedComponents = mutableSetOf<Component>()
         val visitedPairs = mutableSetOf<ComponentPair>()
         val openedNodes = mutableListOf(ComponentNode(from, null))
@@ -61,7 +70,6 @@ class GroupDividider(val snowMachine: SnowMachine, val disconnectWires: Int) {
                 continue
             }
             if (component == to) {
-                count++
                 solutions.add(componentNode)
                 continue
             }
@@ -79,7 +87,7 @@ class GroupDividider(val snowMachine: SnowMachine, val disconnectWires: Int) {
             }
         }
 
-        return count
+        return solutions
     }
 
 
